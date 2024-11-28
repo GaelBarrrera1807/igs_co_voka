@@ -1,0 +1,22 @@
+Obtener rutas:
+python manage.py show_urls -f table > site_map/urls.csv
+
+Generar modelos:
+python manage.py list_model_info --field-class --db-type --signature > site_map/models.txt
+
+Reseteo de BD
+python manage.py reset_db
+python manage.py reset_db --dbname iGrowSoftVoka --user root --password password123
+
+Generar admins
+python manage.py admin_generator <your_app_name>
+
+Generar modelo relacional grafico
+python manage.py graph_models -a -g -o site_map/my_project_visualized.png
+
+
+--------------------------------------------
+python manage.py reset_db --dbname iGrowSoftVoka --user root --password password123
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver

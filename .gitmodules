@@ -1,0 +1,9 @@
+[submodule "igs_app_catalogo"]
+	path = igs_app_catalogo
+	url = https://github.com/rramirez-git/igs_app_catalogo.git
+[submodule "igs_app_base"]
+	path = igs_app_base
+	url = https://github.com/rramirez-git/igs_app_base.git
+[submodule "igs_app_favorito"]
+	path = igs_app_favorito
+	url = https://github.com/rramirez-git/igs_app_favorito.git
