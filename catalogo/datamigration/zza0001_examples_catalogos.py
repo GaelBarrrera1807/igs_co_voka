@@ -1,7 +1,7 @@
 from catalogo.models import OpcionColor
 from catalogo.models import OpcionMaterial
 from catalogo.models import TipoColor
-from catalogo.models import TipoMaterial
+from catalogo.models import TipoMaterial, CategoriaProducto
 
 
 def migration():
@@ -112,3 +112,12 @@ def migration():
     OpcionMaterial.objects.get_or_create(material="TUL", tipo_material=cat)
     OpcionMaterial.objects.get_or_create(material="LEN", tipo_material=cat)
     OpcionMaterial.objects.get_or_create(material="PER", tipo_material=cat)
+
+    cat = CategoriaProducto.objects.get_or_create(
+        categoria="(Ejemplo) Bancas")[0]
+    CategoriaProducto.objects.get_or_create(
+        categoria="(Ejemplo) Metalicas", categoria_padre=cat)
+    CategoriaProducto.objects.get_or_create(
+        categoria="(Ejemplo) Madera", categoria_padre=cat)
+
+    CategoriaProducto.objects.get_or_create(categoria="(Ejemplo) Pasamaneria")

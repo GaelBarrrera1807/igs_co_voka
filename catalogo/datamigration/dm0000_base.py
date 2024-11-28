@@ -14,6 +14,9 @@ def migration():
     add_or_create_menuopc(
         "Tipos de Colores", 3,
         app.menuopc, "tipocolor")
+    add_or_create_menuopc(
+        "Categorías de Productos", 4,
+        app.menuopc, "categoriaproducto")
 
     TipoParte.objects.get_or_create(tipo_de_parte="Estructura")
     TipoParte.objects.get_or_create(tipo_de_parte="Acabado")

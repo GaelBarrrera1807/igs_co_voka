@@ -5,4 +5,5 @@ urlpatterns = [
     path('tipo-de-parte/', include('catalogo.tipoparte.urls')),
     path('tipo-de-color/', include('catalogo.tipocolor.urls')),
     path('tipo-de-material/', include('catalogo.tipomaterial.urls')),
+    path('categoria-de-productos/', include('catalogo.categoriaproducto.urls')),
     ]
