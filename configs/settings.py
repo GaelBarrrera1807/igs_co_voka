@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'igs_app_base',
     'igs_app_catalogo',
     'igs_app_favorito',
+
+    'catalogo',
+    'producto',
+    'personalizacion_producto',
 ]
 
 MIDDLEWARE = [

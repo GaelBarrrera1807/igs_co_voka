@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('igs_app_base.urls')),
     path('', include('igs_app_catalogo.urls')),
     path('', include('igs_app_favorito.urls')),
+    path('', include('catalogo.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
