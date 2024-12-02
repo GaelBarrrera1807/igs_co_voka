@@ -10,12 +10,6 @@ class MainForm(BaseHiperModelForm):
         fields = "__all__"
 
 
-class OpcionMaterialMainForm(BaseHiperModelForm):
-    class Meta:
-        model = OpcionMaterial
-        fields = "__all__"
-
-
 class OpcionMaterialForm(BaseHiperModelForm):
     class Meta:
         model = OpcionMaterial

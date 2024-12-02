@@ -23,17 +23,21 @@ class Read(GenericReadSuperCatalog):
 
     def create_opcion(self, post: Any):
         color = post.get("color")
+        nombre = post.get("nombre")
         if color:
             self.model_opcion.objects.create(
+                nombre=nombre,
                 color=color,
                 tipo_color=self.get_object())
 
     def update_opcion(self, post: Any):
         color = post.get("color")
+        nombre = post.get("nombre")
         extra = post.get("extra")
         if color and extra:
             opc = self.model_opcion.objects.get(pk=int(extra))
             opc.color = color
+            opc.nombre = nombre
             opc.save()
 
 

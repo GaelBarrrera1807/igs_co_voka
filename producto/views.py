@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from igs_app_base.views import GenericAppRootView
 
-# Create your views here.
+
+class ProductoView(GenericAppRootView):
+    app = "producto"
+    titulo = "Producto"

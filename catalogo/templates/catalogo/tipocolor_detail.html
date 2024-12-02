@@ -13,14 +13,16 @@
             <thead>
             <tr>
                 <th></th>
-                <th>Opción</th>
+                <th>Nombre</th>
+                <th>Color</th>
                 <th></th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th></th>
-                <th>Opción</th>
+                <th>Nombre</th>
+                <th>Color</th>
                 <th></th>
             </tr>
             </tfoot>
@@ -29,10 +31,11 @@
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>{{ reg }}</td>
+                    <td>{{ reg.color }}</td>
                     <th>
-                        <button class="btn btn-light" style="color: {{ reg }};"><i class="fa-solid fa-circle"></i></button>
-                        <button class="btn btn-secondary" style="color: {{ reg }};"><i class="fa-solid fa-circle"></i></button>
-                        <button class="btn btn-dark" style="color: {{ reg }};"><i class="fa-solid fa-circle"></i></button>
+                        <button class="btn btn-light" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
+                        <button class="btn btn-secondary" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
+                        <button class="btn btn-dark" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
                     </th>
                 </tr>
             {% endfor %}
@@ -40,7 +43,7 @@
         </table>
     {% endif %}
 
-    <script type="text/x-handlebars-template" id="opction-form-template">
+    <script type="text/x-handlebars-template" id="opcion-form-template">
         <form method="post" autocomplete="off" enctype="multipart/form-data" id="main-form-option" action="">
             {% csrf_token %}
             <input type="hidden" name="action" value="" />

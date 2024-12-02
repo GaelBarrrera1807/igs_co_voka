@@ -1,4 +1,5 @@
 {% extends "html/html_struct.html" %}
+{% load crud_helpers %}
 
 {% block content%}
     {% if object_list %}
@@ -6,24 +7,23 @@
             <thead>
             <tr>
                 <th></th>
-                <th>Tipo de Parte</th>
+                <th>Producto</th>
+                <th>Categoria</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th></th>
-                <th>Tipo de Parte</th>
+                <th>Producto</th>
+                <th>Categoria</th>
             </tr>
             </tfoot>
             <tbody>
             {% for reg in object_list %}
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
-                    <td>
-                        <a href="{% url 'tipoparte_read' reg.pk %}">
-                            {{ reg }}
-                        </a>
-                    </td>
+                    <td><a href="{% url 'producto_read' reg.pk %}">{{ reg }}</a></td>
+                    <td>{{ reg.categorias.all|join:" | " }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -31,7 +31,7 @@
     {% endif %}
 
     <script type="text/javascript">
-        let update_url = `{% url 'tipoparte_update' pk=0 %}`;
-        let delete_many_url = `{% url 'tipoparte_delete_many' %}`;
+        let update_url = `{% url 'producto_update' pk=0 %}`;
+        let delete_many_url = `{% url 'producto_delete_many' %}`;
     </script>
 {% endblock %}

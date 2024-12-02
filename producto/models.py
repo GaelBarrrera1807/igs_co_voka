@@ -1,3 +1,4 @@
-from django.db import models
+from .producto.models import Producto
 
-# Create your models here.
+from .parteproducto.models import CampoParteProducto
+from .parteproducto.models import ParteProducto

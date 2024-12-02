@@ -6,13 +6,15 @@
             <thead>
             <tr>
                 <th></th>
-                <th>Tipo de Parte</th>
+                <th>Tipo de Campo</th>
+                <th>Tipo Interno</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th></th>
-                <th>Tipo de Parte</th>
+                <th>Tipo de Campo</th>
+                <th>Tipo Interno</th>
             </tr>
             </tfoot>
             <tbody>
@@ -20,10 +22,11 @@
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>
-                        <a href="{% url 'tipoparte_read' reg.pk %}">
+                        <a href="{% url 'tipocampo_read' reg.pk %}">
                             {{ reg }}
                         </a>
                     </td>
+                    <td>{{ reg.tipo_interno }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -31,7 +34,7 @@
     {% endif %}
 
     <script type="text/javascript">
-        let update_url = `{% url 'tipoparte_update' pk=0 %}`;
-        let delete_many_url = `{% url 'tipoparte_delete_many' %}`;
+        let update_url = `{% url 'tipocampo_update' pk=0 %}`;
+        let delete_many_url = `{% url 'tipocampo_delete_many' %}`;
     </script>
 {% endblock %}
