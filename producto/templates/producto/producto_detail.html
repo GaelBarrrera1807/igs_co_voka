@@ -1,0 +1,109 @@
+{% extends "html/form.html" %}
+{% load crispy_forms_tags %}
+{% load crud_helpers %}
+
+{% block forms_middle_right_pre %}
+    {% if object.imagen %}
+        <div id="svg-product-container">
+            {{ object.svg_content|safe }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block postcontent %}
+    <h3>
+        <button onclick="create_parte_producto({{ object.pk }})" title="{% crud_label 'create_f' %} Parte" type="button" class="btn btn-outline-secondary">
+            {% crud_smart_button 'create_f' %}
+        </button>
+        Partes:
+    </h3>
+    {% for parte in object.partes.all %}
+        <div id="parte-{{ parte.pk }}" class="card text-dark bg-light mb-3" data-posicion="{{ parte.posicion }}" data-nombre="{{ parte.nombre }}" data-tipo="{{ parte.tipo_de_parte.pk }}">
+            <div class="card-header">
+                <h5 class="card-title">
+                    <div class="btn-group float-end" role="group">
+                        <button onclick="update_parte_producto({{ parte.pk }})" title="{% crud_label 'update' %} Parte" type="button" class="btn btn-outline-secondary">
+                            {% crud_smart_button 'update' %}
+                        </button>
+                        <button onclick="delete_parte_producto({{ parte.pk }})" title="{% crud_label 'delete' %} Parte" type="button" class="btn btn-outline-secondary">
+                            {% crud_smart_button 'delete' %}
+                        </button>
+                    </div>
+                    <div class="btn-group float-end me-3" role="group">
+                        <button onclick="create_campo_parte_producto({{ parte.pk }})" title="{% crud_label 'create' %} Campo" type="button" class="btn btn-outline-secondary">
+                            {% crud_smart_button 'create' %}
+                        </button>
+                    </div>
+                    ({{ parte.posicion }}) {{ parte }} - {{ parte.tipo_de_parte }}
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if parte.campos.all %}
+                    <h6 class="card-title">Campos:</h6>
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Opciones de Material</th>
+                                <th>Opciones de Color</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Opciones de Material</th>
+                                <th>Opciones de Color</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for campo in parte.campos.all %}
+                                <tr id="campo-{{ campo.pk }}" data-nombre="{{ campo.nombre }}" data-posicion="{{ campo.posicion }}" data-tipocampo="{{ campo.tipo_de_campo.pk }}" data-opcionesmaterial="{{ campo.opciones_material.pk }}" data-opcionescolor="{{ campo.opciones_color.pk }}" data-idsvg="{{ campo.id_svg }}">
+                                    <td>({{ campo.posicion }}) {{ campo }}{% if campo.id_svg %} #{{ campo.id_svg }}{% endif %}</td>
+                                    <td>{{ campo.tipo_de_campo }}</td>
+                                    <td>{% if campo.opciones_material %}{{ campo.opciones_material }}{% endif %}</td>
+                                    <td>{% if campo.opciones_color %}{{ campo.opciones_color }}{% endif %}</td>
+                                    <td>
+                                        <button onclick="update_campo_parte_producto({{ campo.pk }})" title="{% crud_label 'update' %} Campo" type="button" class="btn btn-outline-secondary">
+                                            {% crud_smart_button 'update' %}
+                                        </button>
+                                        <button onclick="delete_campo_parte_producto({{ campo.pk }})" title="{% crud_label 'delete' %} Campo" type="button" class="btn btn-outline-secondary">
+                                            {% crud_smart_button 'delete' %}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <script type="text/x-handlebars-template" id="parte-form-template">
+        <form method="post" autocomplete="off" enctype="multipart/form-data" id="main-form-parte" action="">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="" />
+            <input type="hidden" name="extra" id="extra" value="" />
+            {% crispy form_parte %}
+            <button type="submit" class="btn btn-outline-secondary" id="btn-save" title="{% action_label 'save' %}">
+                {% action_icon 'save' %}
+            </button>
+        </form>
+    </script>
+
+    <script type="text/x-handlebars-template" id="campo-form-template">
+        <form method="post" autocomplete="off" enctype="multipart/form-data" id="main-form-campo" action="">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="" />
+            <input type="hidden" name="extra" id="extra" value="" />
+            {% crispy form_campo %}
+            <button type="submit" class="btn btn-outline-secondary" id="btn-save" title="{% action_label 'save' %}">
+                {% action_icon 'save' %}
+            </button>
+        </form>
+    </script>
+{% endblock %}

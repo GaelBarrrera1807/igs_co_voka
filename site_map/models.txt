@@ -1,0 +1,409 @@
+admin.LogEntry
+    Fields:
+        id - AutoField, integer AUTO_INCREMENT
+        action_time - DateTimeField, datetime(6)
+        user - ForeignKey, integer
+        content_type - ForeignKey, integer
+        object_id - TextField, longtext
+        object_repr - CharField, varchar(200)
+        action_flag - PositiveSmallIntegerField, smallint UNSIGNED
+        change_message - TextField, longtext
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_action_flag_display(self, *, field=<django.db.models.fields.PositiveSmallIntegerField: action_flag>)
+        get_admin_url(self)
+        get_change_message(self)
+        get_constraints(self)
+        get_edited_object(self)
+        get_next_by_action_time(self, *, field=<django.db.models.fields.DateTimeField: action_time>, is_next=True, **kwargs)
+        get_previous_by_action_time(self, *, field=<django.db.models.fields.DateTimeField: action_time>, is_next=False, **kwargs)
+        is_addition(self)
+        is_change(self)
+        is_deletion(self)
+        validate_constraints(self, exclude=None)
+
+auth.Group
+    Fields:
+        user - ManyToManyRel, TypeError (db_type)
+        id - AutoField, integer AUTO_INCREMENT
+        name - CharField, varchar(150)
+        permissions - ManyToManyField, TypeError (db_type)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        natural_key(self)
+        validate_constraints(self, exclude=None)
+
+auth.Permission
+    Fields:
+        group - ManyToManyRel, TypeError (db_type)
+        user - ManyToManyRel, TypeError (db_type)
+        opc_menu - ManyToManyRel, TypeError (db_type)
+        id - AutoField, integer AUTO_INCREMENT
+        name - CharField, varchar(255)
+        content_type - ForeignKey, integer
+        codename - CharField, varchar(100)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        natural_key(self)
+        validate_constraints(self, exclude=None)
+
+auth.User
+    Fields:
+        logentry - ManyToOneRel, integer
+        profile - OneToOneRel, integer
+        mis_favoritos - ManyToOneRel, integer
+        id - AutoField, integer AUTO_INCREMENT
+        password - CharField, varchar(128)
+        last_login - DateTimeField, datetime(6)
+        is_superuser - BooleanField, bool
+        username - CharField, varchar(150)
+        first_name - CharField, varchar(150)
+        last_name - CharField, varchar(150)
+        email - EmailField, varchar(254)
+        is_staff - BooleanField, bool
+        is_active - BooleanField, bool
+        date_joined - DateTimeField, datetime(6)
+        groups - ManyToManyField, TypeError (db_type)
+        user_permissions - ManyToManyField, TypeError (db_type)
+    Methods (non-private/internal):
+        acheck_password(self, raw_password)
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        check_password(self, raw_password)
+        email_user(self, subject, message, from_email=None, **kwargs)
+        get_all_permissions(self, obj=None)
+        get_constraints(self)
+        get_email_field_name()
+        get_full_name(self)
+        get_group_permissions(self, obj=None)
+        get_next_by_date_joined(self, *, field=<django.db.models.fields.DateTimeField: date_joined>, is_next=True, **kwargs)
+        get_previous_by_date_joined(self, *, field=<django.db.models.fields.DateTimeField: date_joined>, is_next=False, **kwargs)
+        get_session_auth_fallback_hash(self)
+        get_session_auth_hash(self)
+        get_short_name(self)
+        get_user_permissions(self, obj=None)
+        get_username(self)
+        has_module_perms(self, app_label)
+        has_perm(self, perm, obj=None)
+        has_perms(self, perm_list, obj=None)
+        has_usable_password(self)
+        natural_key(self)
+        normalize_username(username)
+        set_password(self, raw_password)
+        set_unusable_password(self)
+        username_validator(value)
+        validate_constraints(self, exclude=None)
+
+catalogo.CategoriaProducto
+    Fields:
+        subcategorias - ManyToOneRel, bigint
+        productos - ManyToManyRel, TypeError (db_type)
+        id - BigAutoField, bigint AUTO_INCREMENT
+        categoria - CharField, varchar(50)
+        mostrar_en_landing_page - BooleanField, bool
+        categoria_padre - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.OpcionColor
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        color - CharField, varchar(50)
+        tipo_color - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.OpcionMaterial
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        material - CharField, varchar(50)
+        tipo_material - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.TipoCampo
+    Fields:
+        campoparteproducto - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        tipo_de_campo - CharField, varchar(200)
+        tipo_interno - CharField, varchar(100)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.TipoColor
+    Fields:
+        opciones - ManyToOneRel, bigint
+        campoparteproducto - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        tipo_de_color - CharField, varchar(200)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.TipoMaterial
+    Fields:
+        opciones - ManyToOneRel, bigint
+        campoparteproducto - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        tipo_de_material - CharField, varchar(200)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+catalogo.TipoParte
+    Fields:
+        parteproducto - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        tipo_de_parte - CharField, varchar(200)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+contenttypes.ContentType
+    Fields:
+        logentry - ManyToOneRel, integer
+        permission - ManyToOneRel, integer
+        id - AutoField, integer AUTO_INCREMENT
+        app_label - CharField, varchar(100)
+        model - CharField, varchar(100)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_all_objects_for_this_type(self, **kwargs)
+        get_constraints(self)
+        get_object_for_this_type(self, using=None, **kwargs)
+        model_class(self)
+        natural_key(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_base.App
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(100)
+        posicion - PositiveSmallIntegerField, smallint UNSIGNED
+        display_as_app - BooleanField, bool
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_by_name(nombre) -> Optional[Any]
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_base.MenuOpc
+    Fields:
+        hijos - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(50)
+        padre - ForeignKey, bigint
+        posicion - PositiveSmallIntegerField, smallint UNSIGNED
+        vista - CharField, varchar(50)
+        permisos_requeridos - ManyToManyField, TypeError (db_type)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        user_has_option(self, user: django.contrib.auth.models.User)
+        validate_constraints(self, exclude=None)
+
+igs_app_base.ParametroSistema
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        seccion - CharField, varchar(100)
+        nombre - CharField, varchar(100)
+        nombre_para_mostrar - CharField, varchar(100)
+        valor - TextField, longtext
+        tipo - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get(seccion, nombre)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_base.ParametroUsuario
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        seccion - CharField, varchar(100)
+        nombre - CharField, varchar(100)
+        valor_default - CharField, varchar(250)
+        tipo - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        get_default(seccion: str, nombre: str) -> str
+        get_valor(user: django.contrib.auth.models.User, seccion: str, nombre: str) -> str | int
+        set_valor(user: django.contrib.auth.models.User, seccion: str, nombre: str, valor: Union[str, Any]) -> bool
+        validate_constraints(self, exclude=None)
+
+igs_app_base.ParametroUsuarioValor
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        user - ForeignKey, integer
+        parametro - ForeignKey, bigint
+        valor - CharField, varchar(250)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get(seccion: str, nombre: str, username: str) -> str
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_base.UserProfile
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        apellido_materno - CharField, varchar(50)
+        telefono - CharField, varchar(10)
+        celular - CharField, varchar(10)
+        whatsapp - CharField, varchar(10)
+        user - OneToOneField, integer
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        can(self, perms: list | str, type_result: str = 'string') -> bool | str | int
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_catalogo.BootstrapColor
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(50)
+        clase_color - CharField, varchar(50)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_catalogo.TipoParametro
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(100)
+        tipo_interno - CharField, varchar(100)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+igs_app_favorito.Favorito
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        user - ForeignKey, integer
+        etiqueta - CharField, varchar(300)
+        url - URLField, varchar(500)
+    Methods (non-private/internal):
+        a(self, external: bool = False) -> str
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+producto.CampoParteProducto
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        posicion - PositiveSmallIntegerField, smallint UNSIGNED
+        id_svg - CharField, varchar(100)
+        parte_producto - ForeignKey, bigint
+        tipo_de_campo - ForeignKey, bigint
+        opciones_material - ForeignKey, bigint
+        opciones_color - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+producto.ParteProducto
+    Fields:
+        campos - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        posicion - PositiveSmallIntegerField, smallint UNSIGNED
+        producto - ForeignKey, bigint
+        tipo_de_parte - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+producto.Producto
+    Fields:
+        partes - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        imagen - FileField, varchar(100)
+        categorias - ManyToManyField, TypeError (db_type)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+sessions.Session
+    Fields:
+        session_key - CharField, varchar(40)
+        session_data - TextField, longtext
+        expire_date - DateTimeField, datetime(6)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        get_decoded(self)
+        get_next_by_expire_date(self, *, field=<django.db.models.fields.DateTimeField: expire_date>, is_next=True, **kwargs)
+        get_previous_by_expire_date(self, *, field=<django.db.models.fields.DateTimeField: expire_date>, is_next=False, **kwargs)
+        get_session_store_class()
+        validate_constraints(self, exclude=None)
+
+Total Models Listed: 25
