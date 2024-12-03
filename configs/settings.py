@@ -137,7 +137,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 DATA_MIGRATION_DIR = 'datamigration'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'session_login'
