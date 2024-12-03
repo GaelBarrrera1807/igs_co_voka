@@ -1,0 +1,18 @@
+button.fav-in,
+button.fav-out {
+    border: none;
+}
+
+.sb-sidenav-menu-favs {
+    border-top: 1px silver solid;
+    overflow: auto;
+    height: 40%
+}
+
+a.fav-lnk {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
