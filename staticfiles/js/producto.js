@@ -2,6 +2,7 @@ let svg_ids = []
 
 let get_svg_ids = () => {
     let svg = document.querySelector(`div#svg-product-container svg`);
+    if(!svg) { return false; }
     svg_ids = Array.from(svg.querySelectorAll(`[id]`)).map(item => item.id);
     let options = svg_ids.map(opt => `<option value="${opt}"></option>`);
     $(document.body).append($(
