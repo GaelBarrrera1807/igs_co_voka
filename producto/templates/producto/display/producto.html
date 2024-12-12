@@ -1,0 +1,18 @@
+<div class="col producto" data-categorias="{{ producto.categorias_pk|join:", " }}">
+    <div class="card h-100">
+        <img src="{{ MEDIA_URL }}{{ producto.fotografia }}" class="card-img-top" />
+        <div class="card-body">
+            <h5 class="card-title">{{ producto }}</h5>
+            <div class="text-center">
+                <a href="#" type="button" class="btn btn-warning rounded-pill">
+                    ¡Personaliza este producto!
+                </a>
+            </div>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">
+            {{ producto.categorias.all|join:", " }}
+            </small>
+        </div>
+    </div>
+</div>

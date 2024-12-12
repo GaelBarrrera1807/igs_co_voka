@@ -1,0 +1,16 @@
+<div class="shadow-sm p-3 mb-5 bg-light rounded">
+    <p class="h6">Categorías:</p>
+    <div>
+        {% for category in categories %}
+            <div class="me-1 btn-group" role="group" aria-label="Category {{ category }} toggle button group">
+                <input type="checkbox" class="btn-check category-type" id="btncheck-{{ category.pk }}" autocomplete="off" data-category-id="{{ category.pk }}" onchange="check_show_productos()" />
+                <label class="me-1 btn btn-outline-secondary rounded-pill" for="btncheck-{{ category.pk }}">{{ category }}</label>
+                {% for subcategory in category.subcategorias.all %}
+                    <input type="checkbox" class="btn-check category-type" id="btncheck-{{ subcategory.pk }}" autocomplete="off" data-category-id="{{ subcategory.pk }}" onchange="check_show_productos()" />
+                    <label class="me-1 btn btn-outline-secondary rounded-pill" for="btncheck-{{ subcategory.pk }}">{{ category }} / {{ subcategory }}</label>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

@@ -13,8 +13,13 @@ class Producto(models.Model):
         upload_to='producto/',
         help_text="Archivo *.sgv con los elementos en 'id' "
                   "correspondientes a la imagen del producto a personalizar")
+    fotografia = models.FileField(
+        upload_to='producto/',
+        help_text="Archivo *.jpg, *.png, etc., "
+                  "correspondiente a la imagen del producto en galería")
     categorias = models.ManyToManyField(
         CategoriaProducto, "productos", blank=True)
+    mostrar_en_galeria = models.BooleanField(default=True, blank=True)
 
     class Meta:
         ordering = ["nombre"]
@@ -31,3 +36,7 @@ class Producto(models.Model):
                 with open(file, "r") as f:
                     return f.read()
         return ""
+
+    @property
+    def categorias_pk(self):
+        return [c.pk for c in self.categorias.all()]

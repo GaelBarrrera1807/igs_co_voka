@@ -20,8 +20,14 @@ from django.contrib import admin
 from django.urls import include
 from django.urls import path
 
+from producto.views import DisclaimerProds, DisplayOpenProds
+
 urlpatterns = ([
     path('admin/', admin.site.urls),
+
+    # PATCH urls for productos display
+    path("", DisclaimerProds.as_view(), name="session_imin_disclaimer"),
+    path("nuestros-produtos/", DisplayOpenProds.as_view(), name="display_open_products"),
     path('', include('igs_app_base.urls')),
     path('', include('igs_app_catalogo.urls')),
     path('', include('igs_app_favorito.urls')),
