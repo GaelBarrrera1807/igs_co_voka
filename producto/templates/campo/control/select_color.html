@@ -1,0 +1,9 @@
+<div>
+    {% for opc in opcs %}
+        <input name="{{ id }}" id="{{ id }}-{{ opc.pk }}" value="{{ opc.nombre }}|{{ opc.color }}" {% if opc.color == vcolor and opc.nombre == vname %}checked="checked"{% endif %} type="radio" class="btn-check" autocomplete="off" />
+        <label class="btn btn-outline-secondary m-1" for="{{ id }}-{{ opc.pk }}">
+            <span style="color: {{ opc.color }}"><i class="fa-solid fa-circle"></i></span>
+            {{ opc.nombre }}
+        </label>
+    {% endfor %}
+</div>

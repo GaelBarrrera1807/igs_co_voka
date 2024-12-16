@@ -1,0 +1,7 @@
+<select id="{{ id }}" name="{{ id }}" title="{{ title }}" class="form-select">
+    {% for opc in opcs %}
+        <option value="{{ opc }}" {% if opc == value %}selected="selected"{% endif %}>
+            {{ opc }}
+        </option>
+    {% endfor %}
+</select>

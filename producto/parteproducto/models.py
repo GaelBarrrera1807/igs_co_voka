@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import SafeString
 
 from catalogo.models import TipoCampo
 from catalogo.models import TipoParte
@@ -45,3 +46,4 @@ class CampoParteProducto(models.Model):
 
     def __str__(self):
         return self.nombre
+

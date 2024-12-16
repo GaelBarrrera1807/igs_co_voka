@@ -1,0 +1,11 @@
+{% load display_product_helpers %}
+
+{% display_product_categories_tree %}
+
+<div class="my-3"></div>
+
+<div id="productos-table" class="row row-cols-1 row-cols-sm-3 g-4">
+    {% for producto in products %}
+        {% include "producto/display/producto.html" %}
+    {% endfor %}
+</div>

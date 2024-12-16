@@ -1,0 +1,61 @@
+{% extends "html/html_struct.html" %}
+
+{% block content%}
+    {% if object_list %}
+        <table id="main-data-table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Personalización</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Usuario</th>
+                <th>Producto</th>
+                <th>Estado Personalización</th>
+                <th>Creación</th>
+                <th>Actualización</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th>Personalización</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Usuario</th>
+                <th>Producto</th>
+                <th>Estado Personalización</th>
+                <th>Creación</th>
+                <th>Actualización</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            {% for reg in object_list %}
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
+                    <td>
+                        <a href="{% url 'personalizacion_read' reg.pk %}">
+                            {{ reg }}
+                        </a>
+                    </td>
+                    <td>{{ reg.nombre }}</td>
+                    <td>{{ reg.telefono }}</td>
+                    <td>{{ reg.correo_electronico }}</td>
+                    <td>{% if reg.user %}{{ reg.user.profile }}{% endif %}</td>
+                    <td>{{ reg.producto }}</td>
+                    <td>{{ reg.estado }}</td>
+                    <td>{{ reg.creacion }}</td>
+                    <td>{{ reg.actualizacion }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <script type="text/javascript">
+        let update_url = `{% url 'personalizacion_update' pk=0 %}`;
+        let delete_many_url = `{% url 'personalizacion_delete_many' %}`;
+    </script>
+{% endblock %}
