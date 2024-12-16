@@ -1,10 +1,17 @@
+{% load humanize %}
 <div class="col producto" data-categorias="{{ producto.categorias_pk|join:", " }}">
     <div class="card h-100">
         <img src="{{ MEDIA_URL }}{{ producto.fotografia }}" class="card-img-top" />
         <div class="card-body">
             <h5 class="card-title">{{ producto }}</h5>
+            <div class="text-center mb-2">
+                Desde:<br />
+                <span class="btn btn-outline-success rounded-pill">
+                    MXN ${{ producto.precio|intcomma }}
+                </span>
+            </div>
             <div class="text-center">
-                <a href="#" type="button" class="btn btn-warning rounded-pill">
+                <a href="#" type="button" class="btn btn-warning rounded-pill p-3">
                     ¡Personaliza este producto!
                 </a>
             </div>

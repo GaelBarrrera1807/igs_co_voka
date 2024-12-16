@@ -19,6 +19,7 @@ class Producto(models.Model):
                   "correspondiente a la imagen del producto en galería")
     categorias = models.ManyToManyField(
         CategoriaProducto, "productos", blank=True)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
     mostrar_en_galeria = models.BooleanField(default=True, blank=True)
 
     class Meta:

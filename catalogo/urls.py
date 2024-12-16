@@ -9,4 +9,5 @@ urlpatterns = [
         'categoria-de-productos/',
         include('catalogo.categoriaproducto.urls')),
     path('tipo-de-campo/', include('catalogo.tipocampo.urls')),
+    path('estado-de-personalizacion/', include('catalogo.estadopersonalizacion.urls')),
     ]
