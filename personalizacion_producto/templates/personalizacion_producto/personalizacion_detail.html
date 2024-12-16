@@ -1,0 +1,93 @@
+{% extends "html/form.html" %}
+{% load crispy_forms_tags %}
+{% load crud_helpers %}
+{% load display_product_helpers %}
+{% load personalizacion_helpers %}
+
+{% block postcontent %}
+    <h3>Partes:</h3>
+    {% for parte in object.producto.partes.all %}
+        <div id="parte-{{ parte.pk }}" class="card text-dark bg-light mb-3" data-posicion="{{ parte.posicion }}" data-nombre="{{ parte.nombre }}" data-tipo="{{ parte.tipo_de_parte.pk }}">
+            <div class="card-header">
+                <h5 class="card-title">
+                    ({{ parte.posicion }}) {{ parte }} - {{ parte.tipo_de_parte }}
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if parte.campos.all %}
+                    <h6 class="card-title">Campos:</h6>
+                    <table class="table table-hover table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Opciones de Material</th>
+                                <th>Opciones de Color</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Opciones de Material</th>
+                                <th>Opciones de Color</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for campo in parte.campos.all %}
+                                <tr id="campo-{{ campo.pk }}" data-nombre="{{ campo.nombre }}" data-posicion="{{ campo.posicion }}" data-tipocampo="{{ campo.tipo_de_campo.pk }}" data-opcionesmaterial="{{ campo.opciones_material.pk }}" data-opcionescolor="{{ campo.opciones_color.pk }}" data-idsvg="{{ campo.id_svg }}">
+                                    <td>({{ campo.posicion }}) {{ campo }}{% if campo.id_svg %} #{{ campo.id_svg }}{% endif %}</td>
+                                    <td>{{ campo.tipo_de_campo }}</td>
+                                    <td>{% if campo.opciones_material %}{{ campo.opciones_material }}{% endif %}</td>
+                                    <td>{% if campo.opciones_color %}{{ campo.opciones_color }}{% endif %}</td>
+                                    <td>
+                                        {% get_value_for_personalizacion object campo.pk %}
+                                    </td>
+                                    <td>
+                                        <button onclick="show_form_set_value_campo_personalizacion({{ campo.pk }})" title="{% crud_label 'update' %} Campo" type="button" class="btn btn-outline-secondary">
+                                            {% crud_smart_button 'update' %}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for line in object.detalle.all %}
+        <script type="text/x-handlebars-template" id="form-control-{{ line.campo.pk }}-template">
+            {% form_field_control line.campo line.valor %}
+        </script>
+    {% endfor %}
+
+    <script type="text/x-handlebars-template" id="form-control-update-template">
+        <form id="frm-update-campo-personalizacion" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            {% verbatim %}
+            <input type="hidden" name="pkcampo" value="{{ pkcampo }}" />
+            <input type="hidden" name="action" value="update-field-value" />
+            {{{ control }}}
+            {% endverbatim %}
+            <div class="row">
+                <div class="col-sm-6 text-center" style="color: white">
+                    <button type="submit" class="btn btn-outline-secondary" title="{% action_label 'ok' %}">
+                         {% action_icon 'ok' %} {% action_label 'ok' %}
+                    </button>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <button data-bs-dismiss="modal" type="button" class="btn btn-outline-secondary" title="{% action_label 'cancel' %}">
+                        {% action_icon 'cancel' %} {% action_label 'cancel' %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </script>
+
+{% endblock %}
