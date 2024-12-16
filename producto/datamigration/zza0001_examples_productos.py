@@ -9,7 +9,7 @@ from producto.models import Producto
 
 
 def migration():
-    banca, created = Producto.objects.get_or_create(nombre="(Ejemplo) Banca")
+    banca, created = Producto.objects.get_or_create(nombre="(Ejemplo) Banca", precio=1499.99)
     if created:
         banca.categorias.add(
             CategoriaProducto.objects.get_or_create(
@@ -74,7 +74,7 @@ def migration():
             nombre="Notas y Comentarios", parte_producto=parte, posicion=4,
             tipo_de_campo=TipoCampo.objects.get(tipo_interno="ABIERTO"))
 
-    cordon, created = Producto.objects.get_or_create(nombre="(Ejemplo Cordon")
+    cordon, created = Producto.objects.get_or_create(nombre="(Ejemplo Cordon", precio=0)
     if created:
         cordon.categorias.add(
             CategoriaProducto.objects.get_or_create(
