@@ -24,7 +24,7 @@ def migration():
     cats = list(CategoriaProducto.objects.all())
     for np in range(nprods):
         nombre = f"producto_{np + 1:03}"
-        prod, cprod = Producto.objects.get_or_create(nombre=nombre)
+        prod, cprod = Producto.objects.get_or_create(nombre=nombre, precio=0)
         if cprod:
             ncat = rn.randint(0, len(cats))
             prod.categorias.set(rn.sample(cats, ncat))
