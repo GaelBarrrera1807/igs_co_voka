@@ -1,0 +1,7 @@
+{% load display_product_helpers %}
+
+<h3>{{ parte.nombre }}</h3>
+<hr />
+{% for campo in parte.campos.all %}
+    {% form_field_control campo %}
+{% endfor %}

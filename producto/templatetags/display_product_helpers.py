@@ -4,7 +4,7 @@ from django import template
 
 from catalogo.models import CategoriaProducto
 from producto.models import Producto
-from producto.parteproducto.models import CampoParteProducto
+from producto.models import CampoParteProducto, ParteProducto
 
 register = template.Library()
 
@@ -46,3 +46,7 @@ def form_field_control(campo: CampoParteProducto, value: str = "") -> dict:
     return {
         'campo': campo, 'value': value,
         'id': f'campo-html-object-{campo.pk}', }
+
+@register.inclusion_tag("parte/control/form_controls.html")
+def parte_form_field_control(parte: ParteProducto) -> dict:
+    return {"parte": parte}

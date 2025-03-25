@@ -16,6 +16,7 @@
                 <th>Nombre</th>
                 <th>Color</th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tfoot>
@@ -23,6 +24,7 @@
                 <th></th>
                 <th>Nombre</th>
                 <th>Color</th>
+                <th></th>
                 <th></th>
             </tr>
             </tfoot>
@@ -32,11 +34,16 @@
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>{{ reg }}</td>
                     <td>{{ reg.color }}</td>
-                    <th>
+                    <td>
                         <button class="btn btn-light" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
                         <button class="btn btn-secondary" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
                         <button class="btn btn-dark" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
-                    </th>
+                    </td>
+                    <td>
+                        {% if reg.imagen %}
+                        <img src="{{ MEDIA_URL }}{{ reg.imagen }}" alt="{{ reg }}" />
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

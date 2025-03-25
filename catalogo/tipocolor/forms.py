@@ -15,5 +15,5 @@ class MainForm(BaseHiperModelForm):
 class OpcionColorForm(BaseHiperModelForm):
     class Meta:
         model = OpcionColor
-        fields = ["nombre", 'color']
+        fields = ["nombre", 'color', 'imagen']
         widgets = {'color': forms.TextInput({'type': 'color'})}
