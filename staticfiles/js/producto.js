@@ -86,6 +86,21 @@ let delete_campo_parte_producto_execute = (extra) =>{
     frm.submit();
 };
 
+let check_show_productos = () => {
+    let ckb = Array.from(document.querySelectorAll(`input.category-type[type="checkbox"]`)).filter(item => item.checked);
+    let cards = $(`#productos-table div.producto`);
+    if(ckb.length === 0) {
+        cards.removeClass('d-none')
+    } else {
+        cards.addClass('d-none');
+        let ids = ckb.map(item => item.dataset.categoryId);
+        Array.from(cards).filter(card => {
+            let categs = card.dataset.categorias.split(", ");
+            return categs.filter(c => ids.includes(c)).length > 0;
+        }).forEach(card => $(card).removeClass('d-none'));
+    }
+}
+
 window.addEventListener('DOMContentLoaded', evt => {
     get_svg_ids();
 });
