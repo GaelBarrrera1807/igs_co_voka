@@ -1,0 +1,58 @@
+<script type="text/x-handlebars-template" id="producto-personalizacion-{{ producto.pk }}-template">
+<form id="producto-personalizacion-form" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <ul class="nav nav-tabs" id="parte-{{ parte.pk }}-tabs" role="tablist">
+        {% for parte in producto.partes.all %}
+        {% if parte.has_color_palette_fields %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if forloop.first %}active{% endif %}" id="tab-parte-{{ parte.pk }}-paletas" data-bs-toggle="tab" data-bs-target="#parte-{{ parte.pk }}-paletas" type="button" role="tab" aria-controls="parte-{{ parte.pk }}-paletas" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">Paleta</button>
+        </li>
+        {% endif %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if forloop.first and not parte.has_color_palette_fields %}active{% endif %}" id="tab-parte-{{ parte.pk }}" data-bs-toggle="tab" data-bs-target="#parte-{{ parte.pk }}" type="button" role="tab" aria-controls="parte-{{ parte.pk }}" aria-selected="{% if forloop.first and not parte.has_color_palette_fields %}true{% else %}false{% endif %}">{{ parte }}</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content" id="parte-{{ parte.pk }}-tabs-content">
+        {% for parte in producto.partes.all %}
+        {% if parte.has_color_palette_fields %}
+        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="parte-{{ parte.pk }}-paletas" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}-paletas">
+
+            <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab-parte-{{ paleta.pk }}" role="tablist" aria-orientation="vertical">
+                    {% for paleta in parte.paletas_de_color.all %}
+                    <button class="nav-link {% if forloop.first %}active{% endif %}" id="v-pills-parte-{{ paleta.pk }}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-parte-{{ paleta.pk }}" type="button" role="tab" aria-controls="v-pills-parte-{{ paleta.pk }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                        {{ paleta }}
+                    </button>
+                    {% endfor %}
+                </div>
+                <div class="tab-content" id="v-pills-tab-parte-{{ paleta.pk }}-content">
+                    {% for paleta in parte.paletas_de_color.all %}
+                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="v-pills-parte-{{ paleta.pk }}" role="tabpanel" aria-labelledby="v-pills-parte-{{ paleta.pk }}-tab">
+                        <div class="d-grid gap-1">
+                        {% for color in paleta.opciones.all %}
+                            <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this)" />
+                            <label class="btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
+                                {% if color.imagen %}
+                                    <img class="d-inline-block muestra-color rounded" src="{{ MEDIA_URL }}{{ color.imagen }}" />
+                                {% else %}
+                                    <div class="d-inline-block muestra-color rounded" style="background-color: {{ color.color }};"></div>
+                                {% endif %}
+                                <span class="align-top">{{ color }}</span>
+                            </label>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        {% endif %}
+        <div class="tab-pane fade {% if forloop.first and not parte.has_color_palette_fields %}show active{% endif %}" id="parte-{{ parte.pk }}" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}">
+            <h1>{{ parte }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+</form>
+</script>

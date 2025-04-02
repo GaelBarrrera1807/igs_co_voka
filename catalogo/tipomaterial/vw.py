@@ -21,7 +21,7 @@ class Read(GenericReadSuperCatalog):
     form_class_opcion = OpcionMaterialForm
     model_opcion = OpcionMaterial
 
-    def create_opcion(self, post: Any):
+    def create_opcion(self, post: Any, files: Any):
         material = post.get("material")
         if material:
             self.model_opcion.objects.create(

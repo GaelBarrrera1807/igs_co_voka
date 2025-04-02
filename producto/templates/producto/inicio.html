@@ -2,13 +2,13 @@
 {% load parametro_helpers %}
 
 {% if not user.is_authenticated %}
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="{{ MEDIA_URL }}{% parametro_de_sistema seccion='SitioGeneral' nombre='main_toolbar_logo' %}" class="d-inline-block align-top" height="25" />
                 {% parametro_de_sistema seccion='SitioGeneral' nombre='site_name' %}
             </a>
-            <div id="page-title" class="d-inline-block me-3">Nuestros Productos</div>
+            <div id="page-title" class="d-inline-block me-3 text-white">Nuestros Productos</div>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li>
                     <a href="{% url 'session_login' %}" class="btn btn-outline-secondary" type="button" title="Entrar">

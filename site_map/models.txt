@@ -60,6 +60,7 @@ auth.User
         logentry - ManyToOneRel, integer
         profile - OneToOneRel, integer
         mis_favoritos - ManyToOneRel, integer
+        personalizaciones - ManyToOneRel, integer
         id - AutoField, integer AUTO_INCREMENT
         password - CharField, varchar(128)
         last_login - DateTimeField, datetime(6)
@@ -118,12 +119,26 @@ catalogo.CategoriaProducto
         get_constraints(self)
         validate_constraints(self, exclude=None)
 
+catalogo.EstadoPersonalizacion
+    Fields:
+        personalizacion - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        estado - CharField, varchar(200)
+        estado_interno - CharField, varchar(100)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
 catalogo.OpcionColor
     Fields:
         id - BigAutoField, bigint AUTO_INCREMENT
         nombre - CharField, varchar(200)
         color - CharField, varchar(50)
         tipo_color - ForeignKey, bigint
+        imagen - FileField, varchar(100)
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
         arefresh_from_db(self, using=None, fields=None, from_queryset=None)
@@ -159,7 +174,7 @@ catalogo.TipoCampo
 catalogo.TipoColor
     Fields:
         opciones - ManyToOneRel, bigint
-        campoparteproducto - ManyToOneRel, bigint
+        parteproducto - ManyToManyRel, TypeError (db_type)
         id - BigAutoField, bigint AUTO_INCREMENT
         tipo_de_color - CharField, varchar(200)
     Methods (non-private/internal):
@@ -344,16 +359,69 @@ igs_app_favorito.Favorito
         get_constraints(self)
         validate_constraints(self, exclude=None)
 
+personalizacion_producto.Personalizacion
+    Fields:
+        detalle - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        telefono - CharField, varchar(15)
+        correo_electronico - EmailField, varchar(254)
+        notas_y_comentarios - TextField, longtext
+        producto - ForeignKey, bigint
+        user - ForeignKey, integer
+        estado - ForeignKey, bigint
+        creacion - DateTimeField, datetime(6)
+        actualizacion - DateTimeField, datetime(6)
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        get_detail_by_field_pk(self, pk: int) -> 'PersonalizacionDetalle'
+        get_next_by_actualizacion(self, *, field=<django.db.models.fields.DateTimeField: actualizacion>, is_next=True, **kwargs)
+        get_next_by_creacion(self, *, field=<django.db.models.fields.DateTimeField: creacion>, is_next=True, **kwargs)
+        get_previous_by_actualizacion(self, *, field=<django.db.models.fields.DateTimeField: actualizacion>, is_next=False, **kwargs)
+        get_previous_by_creacion(self, *, field=<django.db.models.fields.DateTimeField: creacion>, is_next=False, **kwargs)
+        validate_constraints(self, exclude=None)
+
+personalizacion_producto.PersonalizacionDetalle
+    Fields:
+        id - BigAutoField, bigint AUTO_INCREMENT
+        personalizacion - ForeignKey, bigint
+        campo - ForeignKey, bigint
+        valor - TextField, longtext
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
 producto.CampoParteProducto
     Fields:
+        personalizaciondetalle - ManyToOneRel, bigint
         id - BigAutoField, bigint AUTO_INCREMENT
         nombre - CharField, varchar(200)
         posicion - PositiveSmallIntegerField, smallint UNSIGNED
         id_svg - CharField, varchar(100)
         parte_producto - ForeignKey, bigint
+        grupo_producto - ForeignKey, bigint
         tipo_de_campo - ForeignKey, bigint
         opciones_material - ForeignKey, bigint
-        opciones_color - ForeignKey, bigint
+    Methods (non-private/internal):
+        adelete(self, using=None, keep_parents=False)
+        arefresh_from_db(self, using=None, fields=None, from_queryset=None)
+        asave(self, *args, force_insert=False, force_update=False, using=None, update_fields=None)
+        get_constraints(self)
+        validate_constraints(self, exclude=None)
+
+producto.GrupoCampos
+    Fields:
+        campos - ManyToOneRel, bigint
+        id - BigAutoField, bigint AUTO_INCREMENT
+        nombre - CharField, varchar(200)
+        posicion - PositiveSmallIntegerField, smallint UNSIGNED
+        parte_producto - ForeignKey, bigint
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
         arefresh_from_db(self, using=None, fields=None, from_queryset=None)
@@ -363,12 +431,14 @@ producto.CampoParteProducto
 
 producto.ParteProducto
     Fields:
+        gruposdecampos - ManyToOneRel, bigint
         campos - ManyToOneRel, bigint
         id - BigAutoField, bigint AUTO_INCREMENT
         nombre - CharField, varchar(200)
         posicion - PositiveSmallIntegerField, smallint UNSIGNED
         producto - ForeignKey, bigint
         tipo_de_parte - ForeignKey, bigint
+        paletas_de_color - ManyToManyField, TypeError (db_type)
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
         arefresh_from_db(self, using=None, fields=None, from_queryset=None)
@@ -379,9 +449,13 @@ producto.ParteProducto
 producto.Producto
     Fields:
         partes - ManyToOneRel, bigint
+        personalizaciones - ManyToOneRel, bigint
         id - BigAutoField, bigint AUTO_INCREMENT
         nombre - CharField, varchar(200)
         imagen - FileField, varchar(100)
+        fotografia - FileField, varchar(100)
+        precio - DecimalField, numeric(8, 2)
+        mostrar_en_galeria - BooleanField, bool
         categorias - ManyToManyField, TypeError (db_type)
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
@@ -406,4 +480,4 @@ sessions.Session
         get_session_store_class()
         validate_constraints(self, exclude=None)
 
-Total Models Listed: 25
+Total Models Listed: 29
