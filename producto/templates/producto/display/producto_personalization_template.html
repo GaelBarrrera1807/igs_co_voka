@@ -16,7 +16,7 @@
     <div class="tab-content" id="parte-{{ parte.pk }}-tabs-content">
         {% for parte in producto.partes.all %}
         {% if parte.has_color_palette_fields %}
-        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="parte-{{ parte.pk }}-paletas" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}-paletas">
+        <div class="tab-personalizacion tab-pane fade {% if forloop.first %}show active{% endif %}" id="parte-{{ parte.pk }}-paletas" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}-paletas">
 
             <div class="d-flex align-items-start">
                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab-parte-{{ paleta.pk }}" role="tablist" aria-orientation="vertical">
@@ -49,8 +49,37 @@
 
         </div>
         {% endif %}
-        <div class="tab-pane fade {% if forloop.first and not parte.has_color_palette_fields %}show active{% endif %}" id="parte-{{ parte.pk }}" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}">
-            <h1>{{ parte }}</h1>
+        <div class="tab-personalizacion tab-pane fade {% if forloop.first and not parte.has_color_palette_fields %}show active{% endif %}" id="parte-{{ parte.pk }}" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}">
+
+            <ul class="nav nav-pills mb-3" id="pills-tab-{{ parte.pk }}" role="tablist">
+                {% for gpo in parte.gruposdecampos.all %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if forloop.first %}active{% endif %}" id="pills-gpo-{{ gpo.pk }}-tab" data-bs-toggle="pill" data-bs-target="#pills-gpo-{{ gpo.pk }}" type="button" role="tab" aria-controls="pills-gpo-{{ gpo.pk }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                        {{ gpo }}
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="row">
+                {% if parte.has_color_palette_fields %}
+                <div class="col">
+                    <div class="paleta_usuario d-grid gap-1" id="paleta-parte-{{ parte.pk }}">
+
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col">
+                    <div class="tab-content" id="pills-tabContent-{{ parte.pk }}">
+                        {% for gpo in parte.gruposdecampos.all %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-gpo-{{ gpo.pk }}" role="tabpanel" aria-labelledby="pills-gpo-{{ gpo.pk }}-tab">
+                            {{ gpo }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
         </div>
         {% endfor %}
     </div>

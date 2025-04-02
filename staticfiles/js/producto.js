@@ -170,15 +170,6 @@ let personalizar_producto = (pk, nombre) => {
 let paletas_user = {'paletas': 'colores'};
 
 let update_paletas_user = (parte, paleta, color, color_pk, obj) => {
-    alert(`
-parte => ${parte}
-paleta => ${paleta}
-color => ${color}
-color_pk => ${color_pk}
-obj => ${obj}
-checked => ${obj.checked}
-value => ${obj.value}
-    `);
     if(obj.checked) {
         if(! paletas_user[parte]){
             paletas_user[parte] = {'parte': parte}
@@ -190,7 +181,14 @@ value => ${obj.value}
     } else {
         paletas_user[parte][paleta]['colores'] = paletas_user[parte][paleta]['colores'].filter(c => c !== color);
     }
-    alert(paletas_user);
+    let paleta_user = $(`#paleta-parte-${ parte }`);
+    if(obj.checked) {
+        let label_content = `<div class="d-inline-block muestra-color rounded" style="background-color: ${ color };"></div>`;
+        let label = `<label class="btn btn-outline-secondary" for="btn-radio-color-${ color_pk }-paleta-usuario">${label_content}</label>`;
+        let radio = `<input type="radio" class="btn-check" name="paleta-parte-${ parte }-color-opc" id="btn-radio-color-${ color_pk }-paleta-usuario" value="${ color_pk }}" autocomplete="off" />`;
+        paleta_user.append($(radio));
+        paleta_user.append($(label));
+    }
 };
 
 window.addEventListener('DOMContentLoaded', evt => {
