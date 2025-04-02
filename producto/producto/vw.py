@@ -7,9 +7,9 @@ from igs_app_base.views import GenericList
 from igs_app_base.views import GenericRead
 from igs_app_base.views import GenericUpdate
 
-from producto.models import CampoParteProducto
+from producto.models import CampoParteProducto, GrupoCampos
 from producto.models import ParteProducto
-from producto.parteproducto.forms import MainFormCampo
+from producto.parteproducto.forms import MainFormCampo, MainFormGrupo
 from producto.parteproducto.forms import MainFormParte
 
 from .forms import MainForm
@@ -58,6 +58,7 @@ class Read(GenericRead):
         }
         context["form_parte"] = MainFormParte()
         context["form_campo"] = MainFormCampo()
+        context["form_grupo"] = MainFormGrupo()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -80,8 +81,12 @@ class Read(GenericRead):
             frm = MainFormCampo(request.POST)
             if frm.is_valid():
                 obj = frm.save(commit=False)
-                obj.parte_producto = ParteProducto.objects.get(
-                    pk=int(extra))
+                if extra.startswith('grupo-'):
+                    pk = int(extra.replace('grupo-', '0'))
+                    obj.grupo_producto = GrupoCampos.objects.get(pk=pk)
+                else:
+                    obj.parte_producto = ParteProducto.objects.get(
+                        pk=int(extra))
                 obj.save()
         elif action == "update-campo":
             obj = CampoParteProducto.objects.get(pk=extra)
@@ -90,6 +95,20 @@ class Read(GenericRead):
                 frm.save()
         elif action == "delete-campo":
             CampoParteProducto.objects.filter(pk=extra).delete()
+        elif action == "create-grupo":
+            frm = MainFormGrupo(request.POST)
+            if frm.is_valid():
+                obj = frm.save(commit=False)
+                obj.parte_producto = ParteProducto.objects.get(
+                    pk=int(extra))
+                obj.save()
+        elif action == "update-grupo":
+            obj = GrupoCampos.objects.get(pk=extra)
+            frm = MainFormGrupo(request.POST, instance=obj)
+            if frm.is_valid():
+                frm.save()
+        elif action == "delete-grupo":
+            GrupoCampos.objects.filter(pk=extra).delete()
         return HttpResponseRedirect(request.path)
 
 

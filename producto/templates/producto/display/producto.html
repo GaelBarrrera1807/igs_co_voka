@@ -4,16 +4,18 @@
         <img src="{{ MEDIA_URL }}{{ producto.fotografia }}" class="card-img-top" />
         <div class="card-body">
             <h5 class="card-title">{{ producto }}</h5>
+            {% if producto.precio > 0 %}
             <div class="text-center mb-2">
                 Desde:<br />
                 <span class="btn btn-outline-success rounded-pill">
                     MXN ${{ producto.precio|intcomma }}
                 </span>
             </div>
+            {% endif %}
             <div class="text-center">
-                <a href="#" type="button" class="btn btn-warning rounded-pill p-3">
+                <button onclick="personalizar_producto({{ producto.pk }}, '{{ producto }}')" href="#" type="button" class="btn btn-warning rounded-pill p-3">
                     ¡Personaliza este producto!
-                </a>
+                </button>
             </div>
         </div>
         <div class="card-footer">
@@ -23,3 +25,4 @@
         </div>
     </div>
 </div>
+

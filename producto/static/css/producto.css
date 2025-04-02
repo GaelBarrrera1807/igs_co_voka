@@ -1,0 +1,10 @@
+#producto-personalizacion-form button.nav-link {
+    font-size: small;
+}
+#producto-personalizacion-form ul.nav-tabs button.nav-link {
+    font-size: x-small;
+}
+.muestra-color {
+    height: 25px;
+    width: 75px;
+}

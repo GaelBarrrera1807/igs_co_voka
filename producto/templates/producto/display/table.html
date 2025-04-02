@@ -9,3 +9,9 @@
         {% include "producto/display/producto.html" %}
     {% endfor %}
 </div>
+
+<div id="personalization-templates">
+    {% for producto in products %}
+        {% include "producto/display/producto_personalization_template.html" %}
+    {% endfor %}
+</div>
