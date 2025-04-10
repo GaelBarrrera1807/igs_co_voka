@@ -1,0 +1,6 @@
+{% if campo.tipo_de_campo.tipo_interno == 'CAT_COLOR' %}
+    <input type="checkbox" class="btn-check" id="campo-{{ campo.pk }}" value="" autocomplete="off" onchange="update_picture_color(this, {{ parte.pk }}, '{{ campo.id_svg }}')"  />
+    <label class="btn btn-outline-secondary text-start" for="campo-{{ campo.pk }}" title="{{ campo.nombre }}">
+        <div class="d-inline-block muestra-color rounded" style="background-color: silver;"></div>
+    </label>
+{% endif %}

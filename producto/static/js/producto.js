@@ -188,8 +188,27 @@ let update_paletas_user = (parte, paleta, color, color_pk, obj) => {
         let radio = `<input type="radio" class="btn-check" name="paleta-parte-${ parte }-color-opc" id="btn-radio-color-${ color_pk }-paleta-usuario" value="${ color_pk }}" autocomplete="off" />`;
         paleta_user.append($(radio));
         paleta_user.append($(label));
+    } else {
+        $(`#paleta-parte-${ parte } label[for="btn-radio-color-${ color_pk }-paleta-usuario"]`).remove();
+        $(`#paleta-parte-${ parte } input#btn-radio-color-${ color_pk }-paleta-usuario`).remove();
     }
 };
+
+let update_picture_color = (check, pkparte, id_svg) => {
+    let color_checked = Array.from($(`input[name="paleta-parte-${pkparte}-color-opc"]`)).filter(radio => radio.checked);
+    check.checked = false;
+    if(color_checked.length == 0) {
+        alert("Debe seleccionar al menos un color de la paleta de colores para personalizar el producto.");
+        return false;
+    }
+    let div_color = $(`label[for="${color_checked[0].id}"] div.muestra-color`)[0];
+    let color_text = div_color.style.backgroundColor;
+    check.value = color_text;
+    let div_color_campo = $(`label[for="${check.id}"] div.muestra-color`)[0];
+    div_color_campo.style.backgroundColor = color_text;
+    let svg_item = $(`#producto-svg svg #${id_svg}`)[0];
+        svg_item.style.fill=color_text;
+}
 
 window.addEventListener('DOMContentLoaded', evt => {
     get_svg_ids();

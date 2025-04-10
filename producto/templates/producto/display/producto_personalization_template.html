@@ -51,7 +51,7 @@
         {% endif %}
         <div class="tab-personalizacion tab-pane fade {% if forloop.first and not parte.has_color_palette_fields %}show active{% endif %}" id="parte-{{ parte.pk }}" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}">
 
-            <ul class="nav nav-pills mb-3" id="pills-tab-{{ parte.pk }}" role="tablist">
+            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab-{{ parte.pk }}" role="tablist">
                 {% for gpo in parte.gruposdecampos.all %}
                 <li class="nav-item" role="presentation">
                     <button class="nav-link {% if forloop.first %}active{% endif %}" id="pills-gpo-{{ gpo.pk }}-tab" data-bs-toggle="pill" data-bs-target="#pills-gpo-{{ gpo.pk }}" type="button" role="tab" aria-controls="pills-gpo-{{ gpo.pk }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
@@ -63,7 +63,7 @@
 
             <div class="row">
                 {% if parte.has_color_palette_fields %}
-                <div class="col">
+                <div class="col-sm-3">
                     <div class="paleta_usuario d-grid gap-1" id="paleta-parte-{{ parte.pk }}">
 
                     </div>
@@ -73,15 +73,29 @@
                     <div class="tab-content" id="pills-tabContent-{{ parte.pk }}">
                         {% for gpo in parte.gruposdecampos.all %}
                         <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-gpo-{{ gpo.pk }}" role="tabpanel" aria-labelledby="pills-gpo-{{ gpo.pk }}-tab">
-                            {{ gpo }}
+                            <div class="d-grid gap-1 col-sm-3 offset-sm-4">
+                                {% for campo in gpo.campos.all %}
+                                    {% include 'producto/display/campo_personalizacion_user.html' %}
+                                {% endfor %}
+                            </div>
                         </div>
                         {% endfor %}
+                        <div class="d-grid gap-1 col-sm-3 offset-sm-4">
+                            {% for campo in parte.campos.all %}
+                                {% include 'producto/display/campo_personalizacion_user.html' %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
         {% endfor %}
+    </div>
+    <div class="row">
+    <div id="producto-svg" class="col">
+        {{ producto.svg_content|safe }}
+    </div>
     </div>
 </form>
 </script>
