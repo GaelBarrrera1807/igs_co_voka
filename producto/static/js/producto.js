@@ -184,7 +184,7 @@ let update_paletas_user = (parte, paleta, color, color_pk, obj) => {
     let paleta_user = $(`#paleta-parte-${ parte }`);
     if(obj.checked) {
         let label_content = `<div class="d-inline-block muestra-color rounded" style="background-color: ${ color };"></div>`;
-        let label = `<label class="btn btn-outline-secondary" for="btn-radio-color-${ color_pk }-paleta-usuario">${label_content}</label>`;
+        let label = `<label class="border-0 btn btn-outline-secondary" for="btn-radio-color-${ color_pk }-paleta-usuario">${label_content}</label>`;
         let radio = `<input type="radio" class="btn-check" name="paleta-parte-${ parte }-color-opc" id="btn-radio-color-${ color_pk }-paleta-usuario" value="${ color_pk }}" autocomplete="off" />`;
         paleta_user.append($(radio));
         paleta_user.append($(label));

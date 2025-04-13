@@ -32,7 +32,7 @@
                         <div class="d-grid gap-1">
                         {% for color in paleta.opciones.all %}
                             <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this)" />
-                            <label class="btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
+                            <label class="border-0 btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
                                 {% if color.imagen %}
                                     <img class="d-inline-block muestra-color rounded" src="{{ MEDIA_URL }}{{ color.imagen }}" />
                                 {% else %}
