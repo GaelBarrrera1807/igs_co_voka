@@ -210,6 +210,13 @@ let update_picture_color = (check, pkparte, id_svg) => {
         svg_item.style.fill=color_text;
 }
 
+let update_picture_color_2 = (input, id_svg) => {
+    if(id_svg) {
+        let svg_item = $(`#producto-svg svg #${id_svg}`)[0];
+        svg_item.style.fill = input.value;
+    }
+}
+
 window.addEventListener('DOMContentLoaded', evt => {
     get_svg_ids();
 });

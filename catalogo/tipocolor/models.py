@@ -16,6 +16,7 @@ class OpcionColor(models.Model):
     color = models.CharField(max_length=50)
     tipo_color = models.ForeignKey(
         TipoColor, models.CASCADE, "opciones")
+    codigo = models.CharField(max_length=50, blank=True)
     imagen = models.FileField(
         upload_to="color", null=True, blank=True,
         help_text="Tamaño recomendado de 100x45")

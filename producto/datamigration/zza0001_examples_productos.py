@@ -25,7 +25,7 @@ def migration():
         CampoParteProducto.objects.create(
             nombre="Tipo de Material", parte_producto=parte, posicion=1,
             tipo_de_campo=TipoCampo.objects.get(
-                tipo_interno="CAT_MATERIAL"),
+                tipo_interno="CAT_OPCIONES"),
             opciones_material=TipoMaterial.objects.get(
                 tipo_de_material="(Ejemplo) Material Estructural"))
         CampoParteProducto.objects.create(

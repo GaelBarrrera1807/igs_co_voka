@@ -14,12 +14,14 @@
             <tr>
                 <th></th>
                 <th>Opción</th>
+                <th>Imagen</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th></th>
                 <th>Opción</th>
+                <th>Imagen</th>
             </tr>
             </tfoot>
             <tbody>
@@ -27,6 +29,7 @@
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>{{ reg }}</td>
+                    <td>{% if reg.imagen %}<img src="{{ MEDIA_URL }}{{ reg.imagen }}" />{% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
