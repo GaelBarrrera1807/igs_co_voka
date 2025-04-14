@@ -2,6 +2,7 @@
 {% load crud_helpers %}
 
 {% block content%}
+    <!-- producto/producto/producto_list.html start block content -->
     {% if object_list %}
         <table id="main-data-table">
             <thead>
@@ -34,4 +35,5 @@
         let update_url = `{% url 'producto_update' pk=0 %}`;
         let delete_many_url = `{% url 'producto_delete_many' %}`;
     </script>
+    <!-- producto/producto/producto_list.html end block content -->
 {% endblock %}

@@ -1,3 +1,4 @@
+<!-- producto/producto/display/campo_personalizacion_user.html start -->
 {% if campo.tipo_de_campo.tipo_interno == 'CAT_COLOR' %}
     <input type="checkbox" class="btn-check" id="campo-{{ campo.pk }}" value="" autocomplete="off" onchange="update_picture_color(this, {{ parte.pk }}, '{{ campo.id_svg }}')"  />
     <label class="border-0 btn btn-outline-secondary text-start" for="campo-{{ campo.pk }}" title="{{ campo.nombre }}">
@@ -21,3 +22,4 @@
     <label for="campo-{{ campo.pk }}" class="form-label">{{ campo }}</label>
     <input type="color" class="form-control" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" onchange="update_picture_color_2(this, '{{ campo.id_svg }}')"/>
 {% endif %}
+<!-- producto/producto/display/campo_personalizacion_user.html end -->

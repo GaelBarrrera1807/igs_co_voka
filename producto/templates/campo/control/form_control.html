@@ -1,5 +1,6 @@
 {% load display_product_helpers %}
 
+<!-- producto/campo/control/form_control.html start -->
 {% with label=campo.nombre %}
 <div class="mb-3">
     <label for="{{ id }}" class="form-label">
@@ -15,4 +16,5 @@
         {% field_control_input id value label %}
     {% endif %}
 </div>
+    <!-- producto/campo/control/form_control.html end -->
 {% endwith %}

@@ -3,14 +3,17 @@
 {% load crud_helpers %}
 
 {% block forms_middle_right_pre %}
+    <!-- producto/producto/producto_detail.html start block forms_middle_right_pre -->
     {% if object.imagen %}
         <div id="svg-product-container">
             {{ object.svg_content|safe }}
         </div>
     {% endif %}
+    <!-- producto/producto/producto_detail.html end block forms_middle_right_pre -->
 {% endblock %}
 
 {% block postcontent %}
+    <!-- producto/producto/producto_detail.html start block postcontent -->
     <h3>
         <button onclick="create_parte_producto({{ object.pk }})" title="{% crud_label 'create_f' %} Parte" type="button" class="btn btn-outline-secondary">
             {% crud_smart_button 'create_f' %}
@@ -159,4 +162,5 @@
             </button>
         </form>
     </script>
+    <!-- producto/producto/producto_detail.html end block postcontent -->
 {% endblock %}

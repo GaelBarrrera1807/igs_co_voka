@@ -1,3 +1,4 @@
+<!-- producto/campo/control/select_color.html start -->
 <div>
     {% for opc in opcs %}
         <input name="{{ id }}" id="{{ id }}-{{ opc.pk }}" value="{{ opc.nombre }}|{{ opc.color }}" {% if opc.color == vcolor and opc.nombre == vname %}checked="checked"{% endif %} type="radio" class="btn-check" autocomplete="off" />
@@ -7,3 +8,4 @@
         </label>
     {% endfor %}
 </div>
+<!-- producto/campo/control/select_color.html end -->
