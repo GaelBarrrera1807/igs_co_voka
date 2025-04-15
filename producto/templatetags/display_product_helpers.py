@@ -12,7 +12,8 @@ register = template.Library()
 def display_product_table(context) -> dict:
     return {"products":
                 list(Producto.objects.filter(mostrar_en_galeria=True)),
-            "MEDIA_URL": context.get('MEDIA_URL')}
+            "MEDIA_URL": context.get('MEDIA_URL'),
+            "context": context,}
 
 
 @register.inclusion_tag("producto/display/categories.html")
