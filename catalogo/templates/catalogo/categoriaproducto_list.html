@@ -1,6 +1,7 @@
 {% extends "html/html_struct.html" %}
 
 {% block content%}
+    <!-- catalogo/catalogo/categoriaproducto_list.html start block content -->
     {% if object_list %}
         <table id="main-data-table">
             <thead>
@@ -52,4 +53,5 @@
         let update_url = `{% url 'categoriaproducto_update' pk=0 %}`;
         let delete_many_url = `{% url 'categoriaproducto_delete_many' %}`;
     </script>
+    <!-- catalogo/catalogo/categoriaproducto_list.html end block content -->
 {% endblock %}

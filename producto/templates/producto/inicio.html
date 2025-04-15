@@ -1,6 +1,7 @@
 {% load display_product_helpers %}
 {% load parametro_helpers %}
 
+<!-- producto/producto/inicio.html start  -->
 {% if not user.is_authenticated %}
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -23,9 +24,6 @@
 {% endif %}
 
 <div class="container py-3">
-    <p class="lead shadow p-3 mb-5 bg-body rounded">¡Selecciona, Personaliza y Recibe!</p>
-
     {% display_product_table %}
 </div>
-
-
+<!-- producto/producto/inicio.html end  -->

@@ -1,11 +1,12 @@
 {% load display_product_helpers %}
 
+<!-- producto/campo/control/form_control.html start -->
 {% with label=campo.nombre %}
 <div class="mb-3">
     <label for="{{ id }}" class="form-label">
         {{ label }}
     </label>
-    {% if campo.tipo_de_campo.tipo_interno == 'CAT_MATERIAL' %}
+    {% if campo.tipo_de_campo.tipo_interno == 'CAT_OPCIONES' %}
         {% field_control_select id value campo.opciones_material.opciones.all label %}
     {% elif campo.tipo_de_campo.tipo_interno == 'CAT_COLOR' %}
         {% field_control_select_color id value campo.opciones_color.opciones.all %}
@@ -15,4 +16,5 @@
         {% field_control_input id value label %}
     {% endif %}
 </div>
+    <!-- producto/campo/control/form_control.html end -->
 {% endwith %}

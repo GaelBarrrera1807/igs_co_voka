@@ -1,7 +1,8 @@
 {% load display_product_helpers %}
-
+<!-- producto/parte/control/form_controls.html start -->
 <h3>{{ parte.nombre }}</h3>
 <hr />
 {% for campo in parte.campos.all %}
     {% form_field_control campo %}
 {% endfor %}
+<!-- producto/parte/control/form_controls.html start -->

@@ -29,7 +29,7 @@ def migration():
     TipoParte.objects.get_or_create(tipo_de_parte="Tejido")
 
     TipoCampo.objects.get_or_create(
-        tipo_de_campo="Tipo Material", tipo_interno="CAT_MATERIAL")
+        tipo_de_campo="Tipo Material", tipo_interno="CAT_OPCIONES")
     TipoCampo.objects.get_or_create(
         tipo_de_campo="Tipo Color", tipo_interno="CAT_COLOR")
     TipoCampo.objects.get_or_create(

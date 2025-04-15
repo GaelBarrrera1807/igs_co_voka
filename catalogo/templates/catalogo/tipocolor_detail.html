@@ -3,6 +3,7 @@
 {% load crud_helpers %}
 
 {% block postcontent %}
+    <!-- catalogo/catalogo/tipocolor_detal.html start block postcontent -->
     <hr />
     <h3>Opciones</h3>
     {% with toolbar_opciones as toolbar %}
@@ -15,6 +16,7 @@
                 <th></th>
                 <th>Nombre</th>
                 <th>Color</th>
+                <th>Código</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -24,6 +26,7 @@
                 <th></th>
                 <th>Nombre</th>
                 <th>Color</th>
+                <th>Código</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -34,6 +37,7 @@
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>{{ reg }}</td>
                     <td>{{ reg.color }}</td>
+                    <td>{{ reg.codigo }}</td>
                     <td>
                         <button class="btn btn-light" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
                         <button class="btn btn-secondary" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
@@ -61,5 +65,5 @@
             </button>
         </form>
     </script>
-
+    <!-- catalogo/catalogo/tipocolor_detal.html end block postcontent -->
 {% endblock %}

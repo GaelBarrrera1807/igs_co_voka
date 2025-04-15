@@ -3,6 +3,7 @@
 {% load crud_helpers %}
 
 {% block postcontent %}
+    <!-- catalogo/catalogo/tipomaterial_detail.html start block content -->
     <hr />
     <h3>Opciones</h3>
     {% with toolbar_opciones as toolbar %}
@@ -14,12 +15,14 @@
             <tr>
                 <th></th>
                 <th>Opción</th>
+                <th>Imagen</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
                 <th></th>
                 <th>Opción</th>
+                <th>Imagen</th>
             </tr>
             </tfoot>
             <tbody>
@@ -27,6 +30,7 @@
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td>{{ reg }}</td>
+                    <td>{% if reg.imagen %}<img src="{{ MEDIA_URL }}{{ reg.imagen }}" />{% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -44,5 +48,5 @@
             </button>
         </form>
     </script>
-
+    <!-- catalogo/catalogo/tipomaterial_detail.html end block content -->
 {% endblock %}

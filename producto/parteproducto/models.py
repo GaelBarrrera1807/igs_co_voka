@@ -85,7 +85,7 @@ class CampoParteProducto(models.Model):
         null=True, blank=True)
     tipo_de_campo = models.ForeignKey(TipoCampo, models.PROTECT)
     opciones_material = models.ForeignKey(
-        TipoMaterial, models.PROTECT, blank=True, null=True)
+        TipoMaterial, models.PROTECT, blank=True, null=True, verbose_name="Catálogo de Opciones")
 
     class Meta:
         ordering = ['posicion', "nombre"]

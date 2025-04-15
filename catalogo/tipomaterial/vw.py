@@ -9,13 +9,13 @@ from .models import OpcionMaterial
 from .models import TipoMaterial
 
 views = GenericViews(
-    TipoMaterial, "Tipo de Material", "Tipos de Material",
+    TipoMaterial, "Catálogo de Opciones", "Catálogos de Opciones",
     "catalogo", MainForm, MainForm, MainForm)
 
 
 class Read(GenericReadSuperCatalog):
     model = TipoMaterial
-    titulo = "Tipo de Material"
+    titulo = "Catálogo de Opciones"
     app = "catalogo"
     form_class = MainForm
     form_class_opcion = OpcionMaterialForm
@@ -24,17 +24,18 @@ class Read(GenericReadSuperCatalog):
     def create_opcion(self, post: Any, files: Any):
         material = post.get("material")
         if material:
-            self.model_opcion.objects.create(
-                material=material,
-                tipo_material=self.get_object())
+            frm = OpcionMaterialForm(data=post, files =files)
+            opc = frm.save(commit=False)
+            opc.tipo_material = self.get_object()
+            opc.save()
 
-    def update_opcion(self, post: Any):
+    def update_opcion(self, post: Any, files: Any):
         material = post.get("material")
         extra = post.get("extra")
         if material and extra:
             opc = self.model_opcion.objects.get(pk=int(extra))
-            opc.material = material
-            opc.save()
+            frm = OpcionMaterialForm(data=post, files =files, instance=opc)
+            frm.save()
 
 
 views.Read = Read

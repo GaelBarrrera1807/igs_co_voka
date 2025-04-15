@@ -5,6 +5,7 @@
 {% load personalizacion_helpers %}
 
 {% block postcontent %}
+    <!-- personalizacion_producto/personalizacion_detail.html start block postcontent -->
     <h3>Partes:</h3>
     {% for parte in object.producto.partes.all %}
         <div id="parte-{{ parte.pk }}" class="card text-dark bg-light mb-3" data-posicion="{{ parte.posicion }}" data-nombre="{{ parte.nombre }}" data-tipo="{{ parte.tipo_de_parte.pk }}">
@@ -89,5 +90,6 @@
             </div>
         </form>
     </script>
+    <!-- personalizacion_producto/personalizacion_detail.html end block postcontent -->
 
 {% endblock %}

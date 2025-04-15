@@ -1,7 +1,8 @@
+<!-- producto/producto/display/producto_personalization_template.html start -->
 <script type="text/x-handlebars-template" id="producto-personalizacion-{{ producto.pk }}-template">
-<form id="producto-personalizacion-form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="producto-personalizacion-form" action="{% url 'enviar_personalizacion' %}" method="post" enctype="application/x-www-form-urlencoded" onsubmit="update_color_fields()">
     {% csrf_token %}
-    <ul class="nav nav-tabs" id="parte-{{ parte.pk }}-tabs" role="tablist">
+    <ul class="nav nav-tabs" id="parte-tabs" role="tablist">
         {% for parte in producto.partes.all %}
         {% if parte.has_color_palette_fields %}
         <li class="nav-item" role="presentation">
@@ -12,8 +13,13 @@
             <button class="nav-link {% if forloop.first and not parte.has_color_palette_fields %}active{% endif %}" id="tab-parte-{{ parte.pk }}" data-bs-toggle="tab" data-bs-target="#parte-{{ parte.pk }}" type="button" role="tab" aria-controls="parte-{{ parte.pk }}" aria-selected="{% if forloop.first and not parte.has_color_palette_fields %}true{% else %}false{% endif %}">{{ parte }}</button>
         </li>
         {% endfor %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-parte-datos_user" data-bs-toggle="tab" data-bs-target="#parte-datos_user" type="button" role="tab" aria-controls="parte-datos_user" aria-selected="false">
+                Datos
+            </button>
+        </li>
     </ul>
-    <div class="tab-content" id="parte-{{ parte.pk }}-tabs-content">
+    <div class="tab-content" id="parte-tabs-content">
         {% for parte in producto.partes.all %}
         {% if parte.has_color_palette_fields %}
         <div class="tab-personalizacion tab-pane fade {% if forloop.first %}show active{% endif %}" id="parte-{{ parte.pk }}-paletas" role="tabpanel" aria-labelledby="tab-parte-{{ parte.pk }}-paletas">
@@ -31,8 +37,8 @@
                     <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="v-pills-parte-{{ paleta.pk }}" role="tabpanel" aria-labelledby="v-pills-parte-{{ paleta.pk }}-tab">
                         <div class="d-grid gap-1">
                         {% for color in paleta.opciones.all %}
-                            <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this)" />
-                            <label class="btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
+                            <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this, '{{ paleta }}', '{{ color }}')" />
+                            <label class="border-0 btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
                                 {% if color.imagen %}
                                     <img class="d-inline-block muestra-color rounded" src="{{ MEDIA_URL }}{{ color.imagen }}" />
                                 {% else %}
@@ -80,7 +86,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <div class="d-grid gap-1 col-sm-3 offset-sm-4">
+                        <div class="d-grid gap-1 col-sm-4 offset-sm-4">
                             {% for campo in parte.campos.all %}
                                 {% include 'producto/display/campo_personalizacion_user.html' %}
                             {% endfor %}
@@ -91,11 +97,51 @@
 
         </div>
         {% endfor %}
+        <div class="tab-personalizacion tab-pane fade" id="parte-datos_user" role="tabpanel" aria-labelledby="tab-parte-datos_user">
+            <div class="row">
+                <div class="col">
+                    <div class="tab-content" id="pills-tabContent-datos_user">
+                        <div class="d-grid col-sm-6 offset-sm-3">
+                            <div class="mb-3">
+                                <label for="user_nombre" class="form-label">Nombre*:</label>
+                                <input type="text" class="form-control" id="user_nombre" name="user_nombre" value="{{ context.user.profile }}" required="required" maxlength="200" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_telefono" class="form-label">Teléfono*:</label>
+                                <input type="tel" class="form-control" id="user_telefono" name="user_telefono" value="{{ context.user.profile.phone }}" required="required" maxlength="15" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_correo" class="form-label">Correo electrónico*:</label>
+                                <input type="email" class="form-control" id="user_correo" name="user_correo" value="{{ context.user.email }}" required="required" maxlength="200" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="user_notas" class="form-label">Notas y comentarios:</label>
+                                <textarea class="form-control" id="user_notas" name="user_notas" rows="3"></textarea>
+                            </div>
+                            <input type="hidden" id="user_pk" name="user_pk" value="{{ context.user.pk }}"/>
+                            <input type="hidden" id="producto_pk" name="producto_pk" value="{{ producto.pk }}"/>
+                            <input type="hidden" id="campos_color" name="campos_color" value="{{ producto.pk }}"/>
+                            <input type="hidden" id="redirect_to" name="redirect_to" value="{{ context.request.get_full_path }}" />
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-outline-secondary border-0">
+                                    Guardar Diseño <i class="fa-solid fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
     <div class="row">
     <div id="producto-svg" class="col">
         {{ producto.svg_content|safe }}
     </div>
     </div>
+    <div class="row">
+    <div class="col text-center" id="label-producto-personalizado"></div>
+    </div>
 </form>
 </script>
+<!-- producto/producto/display/producto_personalization_template.html start -->
