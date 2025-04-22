@@ -36,7 +36,7 @@
                     {% for paleta in parte.paletas_de_color.all %}
                     <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="v-pills-parte-{{ paleta.pk }}" role="tabpanel" aria-labelledby="v-pills-parte-{{ paleta.pk }}-tab">
                         <div class="d-grid gap-1">
-                        {% for color in paleta.opciones.all %}
+                        {% for color in paleta.opciones.all %}{% if color.activo %}
                             <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this, '{{ paleta }}', '{{ color }}')" />
                             <label class="border-0 btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
                                 {% if color.imagen %}
@@ -46,7 +46,7 @@
                                 {% endif %}
                                 <span class="align-top">{{ color }}</span>
                             </label>
-                        {% endfor %}
+                        {% endif %}{% endfor %}
                         </div>
                     </div>
                     {% endfor %}
@@ -69,7 +69,8 @@
 
             <div class="row">
                 {% if parte.has_color_palette_fields %}
-                <div class="col-sm-3">
+                <div class="col-6 col-sm-3">
+                    <p>Colores seleccionados:</p>
                     <div class="paleta_usuario d-grid gap-1" id="paleta-parte-{{ parte.pk }}">
 
                     </div>

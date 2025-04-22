@@ -14,9 +14,11 @@
             <thead>
             <tr>
                 <th></th>
+                <th>Orden</th>
                 <th>Nombre</th>
                 <th>Color</th>
                 <th>Código</th>
+                <th>Activo</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -24,9 +26,11 @@
             <tfoot>
             <tr>
                 <th></th>
+                <th>Orden</th>
                 <th>Nombre</th>
                 <th>Color</th>
                 <th>Código</th>
+                <th>Activo</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -35,9 +39,11 @@
             {% for reg in object.opciones.all %}
                 <tr>
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
+                    <td>{{ reg.orden }}</td>
                     <td>{{ reg }}</td>
                     <td>{{ reg.color }}</td>
                     <td>{{ reg.codigo }}</td>
+                    <td><input class="form-check-input" type="checkbox" disabled="disabled" {% if reg.activo %}checked="checked"{% endif %} /></td>
                     <td>
                         <button class="btn btn-light" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>
                         <button class="btn btn-secondary" style="color: {{ reg.color }};"><i class="fa-solid fa-circle"></i></button>

@@ -4,6 +4,22 @@
 
 {% block forms_middle_right_pre %}
     <!-- producto/producto/producto_detail.html start block forms_middle_right_pre -->
+    <button type="button" class="btn btn-outline-primary position-relative">
+        Personalizaciones
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ object.personalizaciones.all|length }}
+            <span class="visually-hidden">unread messages</span>
+        </span>
+    </button>
+    {% if object.personalizaciones.all|length > 0 %}
+        <script type="text/javascript">
+            window.addEventListener('DOMContentLoaded', evt => {
+                $(`#main-toolbar a[title^="Eliminar"]`).addClass("disabled")
+                $(`#main-toolbar a[title^="Eliminar"]`).prop("onclick", null).attr("onclick", null);
+                $(`#main-toolbar a[title^="Eliminar"]`).click(() => alert("No es posible eliminar este elemento ya que contiene personalizaciones asociadas"));
+            });
+        </script>
+    {% endif %}
     {% if object.imagen %}
         <div id="svg-product-container">
             {{ object.svg_content|safe }}
@@ -51,8 +67,7 @@
                             <tr>
                                 <th>Campo</th>
                                 <th>Tipo</th>
-                                <th>Catálogo de Opciones</th>
-                                <th>Opciones de Color</th>
+                                <th>Opciones de Productos</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -60,7 +75,7 @@
                             <tr>
                                 <th>Campo</th>
                                 <th>Tipo</th>
-                                <th>Catálogo de Opciones</th>
+                                <th>Opciones de Productos</th>
                                 <th></th>
                             </tr>
                         </tfoot>

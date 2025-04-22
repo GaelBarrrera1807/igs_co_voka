@@ -18,9 +18,10 @@ class OpcionMaterial(models.Model):
     imagen = models.FileField(
         upload_to="opcioncatalogo", null=True, blank=True,
         help_text="Tamaño recomendado de 100x45")
+    orden = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        ordering = ['material']
+        ordering = ['orden', 'material']
 
     def __str__(self):
         return self.material
