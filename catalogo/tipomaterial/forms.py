@@ -13,4 +13,4 @@ class MainForm(BaseHiperModelForm):
 class OpcionMaterialForm(BaseHiperModelForm):
     class Meta:
         model = OpcionMaterial
-        fields = ['material', 'imagen']
+        fields = ['orden', 'material', 'imagen']
