@@ -9,13 +9,13 @@ from .models import OpcionMaterial
 from .models import TipoMaterial
 
 views = GenericViews(
-    TipoMaterial, "Catálogo de Opciones", "Catálogos de Opciones",
+    TipoMaterial, "Opciones de Productos", "Opciones de Productos",
     "catalogo", MainForm, MainForm, MainForm)
 
 
 class Read(GenericReadSuperCatalog):
     model = TipoMaterial
-    titulo = "Catálogo de Opciones"
+    titulo = "Opciones de Productos"
     app = "catalogo"
     form_class = MainForm
     form_class_opcion = OpcionMaterialForm

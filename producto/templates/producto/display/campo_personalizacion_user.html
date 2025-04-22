@@ -4,7 +4,7 @@
     <label class="border-0 btn btn-outline-secondary text-start" for="campo-{{ campo.pk }}" title="{{ campo.nombre }}">
         <div class="d-inline-block muestra-color rounded" style="background-color: silver;"></div>
     </label>
-{% elif campo.tipo_de_campo.tipo_interno == 'CAT_OPCIONES' %}
+{% elif campo.tipo_de_campo.tipo_interno == 'OPCIONES_PRODUCTOS' %}
     <p>{{ campo }}</p>
     {% for opc in campo.opciones_material.opciones.all %}
     <input type="radio" class="btn-check selectable-value" id="campo-{{ campo.pk }}-{{ opc.pk }}" name="campo-{{ campo.pk }}" value="{{ opc.material }}" autocomplete="off" onchange="update_selectable_values_label()" />

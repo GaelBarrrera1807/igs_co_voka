@@ -20,9 +20,11 @@ class OpcionColor(models.Model):
     imagen = models.FileField(
         upload_to="color", null=True, blank=True,
         help_text="Tamaño recomendado de 100x45")
+    orden = models.PositiveSmallIntegerField(default=0)
+    activo = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ['nombre']
+        ordering = ['orden', 'nombre']
 
     def __str__(self):
         return self.nombre

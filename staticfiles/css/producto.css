@@ -12,3 +12,8 @@
 .tab-personalizacion {
     /* min-height: 450px; */
 }
+
+.tab-personalizacion .muestra-color {
+    height: 30px;
+    width: 100px;
+}
