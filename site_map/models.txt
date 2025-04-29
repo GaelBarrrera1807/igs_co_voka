@@ -138,7 +138,10 @@ catalogo.OpcionColor
         nombre - CharField, varchar(200)
         color - CharField, varchar(50)
         tipo_color - ForeignKey, bigint
+        codigo - CharField, varchar(50)
         imagen - FileField, varchar(100)
+        orden - PositiveSmallIntegerField, smallint UNSIGNED
+        activo - BooleanField, bool
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
         arefresh_from_db(self, using=None, fields=None, from_queryset=None)
@@ -151,6 +154,8 @@ catalogo.OpcionMaterial
         id - BigAutoField, bigint AUTO_INCREMENT
         material - CharField, varchar(50)
         tipo_material - ForeignKey, bigint
+        imagen - FileField, varchar(100)
+        orden - PositiveSmallIntegerField, smallint UNSIGNED
     Methods (non-private/internal):
         adelete(self, using=None, keep_parents=False)
         arefresh_from_db(self, using=None, fields=None, from_queryset=None)

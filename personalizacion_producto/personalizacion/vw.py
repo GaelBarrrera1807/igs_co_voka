@@ -1,7 +1,11 @@
 from http.client import HTTPResponse
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.views.generic import TemplateView, DetailView
+from django_weasyprint import WeasyTemplateResponseMixin
+from weasyprint import HTML
 
 import json
 
@@ -74,9 +78,9 @@ views.Create = Create
 views.Read = Read
 
 class CreateFromUser(TemplateView):
-    template_name = "personalizacion_producto/create_from_user.html"
     def post(self, request, *args, **kwargs):
         producto_pk = int(request.POST.get('producto_pk', '0'))
+        pk = 0
         if producto_pk > 0:
             user = request.POST.get('user_pk', "")
             user = int(user) if user != "None" else 0
@@ -88,6 +92,7 @@ class CreateFromUser(TemplateView):
                 producto_pk,
                 user
             )
+            pk = personalizacion.pk
             campos_color = json.loads(request.POST.get('campos_color', '{}',))
             for campo_valor in personalizacion.detalle.all():
                 if campo_valor.campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
@@ -95,4 +100,20 @@ class CreateFromUser(TemplateView):
                 else:
                     campo_valor.valor = request.POST.get(f"campo-{campo_valor.campo.pk}", '')
                 campo_valor.save()
-        return HttpResponseRedirect(request.POST.get("redirect_to", '/'))
+        return HttpResponseRedirect(reverse('pdf_personalizacion', kwargs={'pk': pk}))
+
+
+class ViewPersonalizacion(GenericRead):
+    template_name = "personalizacion_producto/create_from_user.html"
+    model = Personalizacion
+    form_class = MainForm
+
+def ViewPDFPersonalizacion(request, pk):
+    object = Personalizacion.objects.get(pk=pk)
+    html = str(render_to_string("personalizacion_producto/create_from_user.html", {
+        'object': object
+    }) + "")
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="Personalizacion {object.producto}.pdf"'
+    HTML(string=html).write_pdf(response)
+    return response

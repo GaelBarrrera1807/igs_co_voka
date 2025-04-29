@@ -1,0 +1,110 @@
+{% load crud_helpers %}{% load static %}{% load parametro_helpers %}{% load menu_helpers %}{% load html_helpers %}{% load personalizacion_helpers %}<!doctype html />
+<html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="Rubén Ramírez Gómez RAGR8602025L7 rramirez@rramirez.com" />
+    <title>Personalizacion: {{ object.producto }}</title>
+    <link rel="icon" href="{{ MEDIA_URL }}{% parametro_de_sistema seccion='SitioGeneral' nombre='favicon' %}" type="image/png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{% static 'css/base-bootstrap.css' %}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    {% link_apps_tag %}
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 1cm 1cm 1cm 1cm;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="{% url 'session_imin' %}">
+        <img src="{{ MEDIA_URL }}{% parametro_de_sistema seccion='SitioGeneral' nombre='main_toolbar_logo' %}" class="d-inline-block align-top" height="25" />
+        {% parametro_de_sistema seccion='SitioGeneral' nombre='site_name' %}
+    </a>
+    <div id="page-title" class="d-inline-block text-white me-3">
+        Personalización: {{ object.producto }}
+        <small class="me-3">({{ object.nombre }})</small>
+    </div>
+</nav>
+
+<div class="container gap-3">
+
+    <h1 class="">Personalización de producto</h1>
+
+    <table class="table table-striped">
+        <tr>
+            <th class="text-end">Producto:</th>
+            <td class="text-start">{{ object.producto }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Nombre:</th>
+            <td class="text-start">{{ object.nombre }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Teléfono:</th>
+            <td class="text-start">{{ object.telefono }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Correo Electrónico:</th>
+            <td class="text-start">{{ object.correo_electronico }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Notas y Comentarios:</th>
+            <td class="text-start">{{ object.notas_y_comentarios }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Fecha de Creación:</th>
+            <td class="text-start">{{ object.creacion }}</td>
+        </tr>
+        <tr>
+            <th class="text-end">Usuario:</th>
+            <td class="text-start">{% if object.user %}{{ object.user.profile }} ({{ object.user }}){% endif %}</td>
+        </tr>
+    </table>
+
+    <div id="producto-svg" class="my-5">{% procesa_svg object %}</div>
+
+    <h2>Detalle Técnico y Valores:</h2>
+
+    {% for parte in object.producto.partes.all %}
+        <h3>{{ parte }}</h3>
+        <div class="row  row-cols-4">
+        {% for item in parte.detalle %}
+            {% if item.tipo_de_campo %}
+                <div class="col text-end">{{ item }}: </div>
+                <div class="col text-start">{% get_value_for_personalizacion object item.pk %}</div>
+            {% else %}
+                </div>
+                <h4>{{ item }}</h4>
+                <div class="row  row-cols-4">
+                {% for campo in item.campos.all %}
+                    <div class="col text-end">{{ campo }}: </div>
+                    <div class="col text-start">{% get_value_for_personalizacion object campo.pk %}</div>
+                {% endfor %}
+                </div>
+                <div class="row  row-cols-4">
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

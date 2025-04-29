@@ -169,7 +169,7 @@ let personalizar_producto = (pk, nombre) => {
 
 let paletas_user = {'paletas': 'colores'};
 
-let update_paletas_user = (parte, paleta, color, color_pk, obj, paleta_name, color_name) => {
+let update_paletas_user = (parte, paleta, color, color_pk, obj, paleta_name, color_name, color_code) => {
     if(obj.checked) {
         if(! paletas_user[parte]){
             paletas_user[parte] = {'parte': parte}
@@ -183,9 +183,10 @@ let update_paletas_user = (parte, paleta, color, color_pk, obj, paleta_name, col
     }
     let paleta_user = $(`#paleta-parte-${ parte }`);
     if(obj.checked) {
+        let radio_value = `${color}||${color_name}||${color_code}`;
         let label_content = `<div class="d-inline-block muestra-color rounded" style="background-color: ${ color };"></div>`;
         let label = `<label class="border-0 btn btn-outline-secondary" for="btn-radio-color-${ color_pk }-paleta-usuario" title="${paleta_name} - ${color_name}">${label_content}</label>`;
-        let radio = `<input type="radio" class="btn-check" name="paleta-parte-${ parte }-color-opc" id="btn-radio-color-${ color_pk }-paleta-usuario" value="${ color_pk }" autocomplete="off" />`;
+        let radio = `<input type="radio" class="btn-check" name="paleta-parte-${ parte }-color-opc" id="btn-radio-color-${ color_pk }-paleta-usuario" value="${ radio_value }" autocomplete="off" />`;
         paleta_user.append($(radio));
         paleta_user.append($(label));
     } else {
@@ -203,7 +204,7 @@ let update_picture_color = (check, pkparte, id_svg) => {
     }
     let div_color = $(`label[for="${color_checked[0].id}"] div.muestra-color`)[0];
     let color_text = div_color.style.backgroundColor;
-    check.value = color_text;
+    check.value = color_checked[0].value;
     let div_color_campo = $(`label[for="${check.id}"] div.muestra-color`)[0];
     div_color_campo.style.backgroundColor = color_text;
     let svg_item = $(`#producto-svg svg #${id_svg}`)[0];
@@ -226,6 +227,14 @@ let update_color_fields = () => {
     Array.from($(`form#producto-personalizacion-form input[type="checkbox"][name^="campo-"]`)).forEach(
         input => campos_color[input.name] = input.value);
     $('form#producto-personalizacion-form input#campos_color').val(JSON.stringify(campos_color));
+    window.setTimeout(() => {
+        closePanel();
+        window.setTimeout(() => {
+            openPanel(
+                'En un momento comenzará la descarga del formato para el producto personalizado',
+                'Descargando...');
+        }, 1 *1000);
+    }, 1 * 1000);
     return true;
 }
 

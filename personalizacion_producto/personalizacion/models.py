@@ -33,7 +33,7 @@ class Personalizacion(models.Model):
 
 class PersonalizacionDetalle(models.Model):
     personalizacion = models.ForeignKey(Personalizacion, models.CASCADE, "detalle")
-    campo = models.ForeignKey(CampoParteProducto, models.PROTECT)
+    campo = models.ForeignKey(CampoParteProducto, models.PROTECT, related_name="personalizaciones")
     valor = models.TextField(blank=True, default="")
 
     class Meta:
