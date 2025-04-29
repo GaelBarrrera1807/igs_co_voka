@@ -10,6 +10,7 @@
                 <th></th>
                 <th>Producto</th>
                 <th>Categoria</th>
+                <th>Personalizaciones</th>
             </tr>
             </thead>
             <tfoot>
@@ -17,6 +18,7 @@
                 <th></th>
                 <th>Producto</th>
                 <th>Categoria</th>
+                <th>Personalizaciones</th>
             </tr>
             </tfoot>
             <tbody>
@@ -25,6 +27,7 @@
                     <td><input class="form-check-input" type="checkbox" value="{{ reg.pk }}" name="pk" /></td>
                     <td><a href="{% url 'producto_read' reg.pk %}">{{ reg }}</a></td>
                     <td>{{ reg.categorias.all|join:" | " }}</td>
+                    <td>{{ reg.personalizaciones.all|length }}</td>
                 </tr>
             {% endfor %}
             </tbody>

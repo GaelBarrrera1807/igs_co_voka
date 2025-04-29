@@ -37,7 +37,7 @@
                     <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="v-pills-parte-{{ paleta.pk }}" role="tabpanel" aria-labelledby="v-pills-parte-{{ paleta.pk }}-tab">
                         <div class="d-grid gap-1">
                         {% for color in paleta.opciones.all %}{% if color.activo %}
-                            <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this, '{{ paleta }}', '{{ color }}')" />
+                            <input type="checkbox" class="btn-check" id="btn-check-color-{{ color.pk }}" value="{{ color.pk }}" autocomplete="off" onchange="update_paletas_user({{ parte.pk }}, {{ paleta.pk }}, '{{ color.color }}', {{ color.pk }}, this, '{{ paleta }}', '{{ color }}', '{{ color.codigo }}')" />
                             <label class="border-0 btn btn-outline-secondary text-start" for="btn-check-color-{{ color.pk }}">
                                 {% if color.imagen %}
                                     <img class="d-inline-block muestra-color rounded" src="{{ MEDIA_URL }}{{ color.imagen }}" />

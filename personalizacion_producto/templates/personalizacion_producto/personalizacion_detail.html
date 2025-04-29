@@ -15,49 +15,74 @@
                 </h5>
             </div>
             <div class="card-body">
-                {% if parte.campos.all %}
-                    <h6 class="card-title">Campos:</h6>
-                    <table class="table table-hover table-bordered table-sm">
-                        <thead>
-                            <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Opciones de Material</th>
-                                <th>Opciones de Color</th>
-                                <th>Valor</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Opciones de Material</th>
-                                <th>Opciones de Color</th>
-                                <th>Valor</th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {% for campo in parte.campos.all %}
-                                <tr id="campo-{{ campo.pk }}" data-nombre="{{ campo.nombre }}" data-posicion="{{ campo.posicion }}" data-tipocampo="{{ campo.tipo_de_campo.pk }}" data-opcionesmaterial="{{ campo.opciones_material.pk }}" data-opcionescolor="{{ campo.opciones_color.pk }}" data-idsvg="{{ campo.id_svg }}">
-                                    <td>({{ campo.posicion }}) {{ campo }}{% if campo.id_svg %} #{{ campo.id_svg }}{% endif %}</td>
-                                    <td>{{ campo.tipo_de_campo }}</td>
-                                    <td>{% if campo.opciones_material %}{{ campo.opciones_material }}{% endif %}</td>
-                                    <td>{% if campo.opciones_color %}{{ campo.opciones_color }}{% endif %}</td>
-                                    <td>
-                                        {% get_value_for_personalizacion object campo.pk %}
-                                    </td>
-                                    <td>
-                                        <button onclick="show_form_set_value_campo_personalizacion({{ campo.pk }})" title="{% crud_label 'update' %} Campo" type="button" class="btn btn-outline-secondary">
-                                            {% crud_smart_button 'update' %}
-                                        </button>
+                <h6 class="card-title">Campos:</h6>
+                <table class="table table-hover table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Opciones de Productos</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Opciones de Productos</th>
+                            <th>Valor</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for detalle in parte.detalle %}
+                            {% if detalle.tipo_de_campo %}
+                                {% with campo=detalle %}
+                                    <tr id="campo-{{ campo.pk }}" data-nombre="{{ campo.nombre }}" data-posicion="{{ campo.posicion }}" data-tipocampo="{{ campo.tipo_de_campo.pk }}" data-opcionesmaterial="{{ campo.opciones_material.pk }}" data-opcionescolor="{{ campo.opciones_color.pk }}" data-idsvg="{{ campo.id_svg }}">
+                                        <td>({{ campo.posicion }}) {{ campo }}{% if campo.id_svg %} #{{ campo.id_svg }}{% endif %}</td>
+                                        <td>{{ campo.tipo_de_campo }}</td>
+                                        <td>{% if campo.opciones_material %}{{ campo.opciones_material }}{% endif %}</td>
+                                        <td>
+                                            {% get_value_for_personalizacion object campo.pk %}
+                                        </td>
+                                        <td>
+                                            <button onclick="show_form_set_value_campo_personalizacion({{ campo.pk }})" title="{% crud_label 'update' %} Campo" type="button" class="btn btn-outline-secondary">
+                                                {% crud_smart_button 'update' %}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endwith %}
+                            {% else %}
+                                {% with grupo=detalle %}
+                                <tr id="grupo-{{ grupo.pk }}" data-nombre="{{ grupo.nombre }}" data-posicion="{{ grupo.posicion }}" data-tipocampo="" data-opcionesmaterial="" data-opcionescolor="" data-idsvg="">
+                                    <td colspan="4">
+                                        ({{ grupo.posicion }}) {{ grupo }}
                                     </td>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
+                                {% for campo in grupo.campos.all %}
+                                    <tr id="campo-{{ campo.pk }}" data-nombre="{{ campo.nombre }}" data-posicion="{{ campo.posicion }}" data-tipocampo="{{ campo.tipo_de_campo.pk }}" data-opcionesmaterial="{{ campo.opciones_material.pk }}" data-opcionescolor="{{ campo.opciones_color.pk }}" data-idsvg="{{ campo.id_svg }}">
+                                        <td>
+                                            <div class="d-inline-block me-3"></div>
+                                            ({{ campo.posicion }}) {{ campo }}{% if campo.id_svg %} #{{ campo.id_svg }}{% endif %}
+                                        </td>
+                                        <td>{{ campo.tipo_de_campo }}</td>
+                                        <td>{% if campo.opciones_material %}{{ campo.opciones_material }}{% endif %}</td>
+                                        <td>
+                                            {% get_value_for_personalizacion object campo.pk %}
+                                        </td>
+                                        <td>
+                                            <button onclick="show_form_set_value_campo_personalizacion({{ campo.pk }})" title="{% crud_label 'update' %} Campo" type="button" class="btn btn-outline-secondary">
+                                                {% crud_smart_button 'update' %}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     {% endfor %}
