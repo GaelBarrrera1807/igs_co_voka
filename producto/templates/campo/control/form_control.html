@@ -9,7 +9,10 @@
     {% if campo.tipo_de_campo.tipo_interno == 'OPCIONES_PRODUCTOS' %}
         {% field_control_select id value campo.opciones_material.opciones.all label %}
     {% elif campo.tipo_de_campo.tipo_interno == 'CAT_COLOR' %}
+        {% comment "forma original con selector de color"%}
         {% field_control_select_color id value campo.opciones_color.opciones.all %}
+        {% endcomment %}
+        {% field_control_input id value label %}
     {% elif campo.tipo_de_campo.tipo_interno == 'COLOR' %}
         {% field_control_input id value label "color" %}
     {% else %}

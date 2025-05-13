@@ -15,6 +15,15 @@ def get_detail_line_for_personalizacion(personalizacion, pkcampo):
 def get_value_for_personalizacion(personalizacion, pkcampo):
     return get_detail_line_for_personalizacion(personalizacion, pkcampo).valor
 
+
+@register.simple_tag
+def get_value_for_personalizacion_color(personalizacion, pkcampo):
+    valor = get_detail_line_for_personalizacion(personalizacion, pkcampo).valor
+    try:
+        return valor.split("||")[2]
+    except:
+        return valor
+
 @register.simple_tag
 def procesa_svg(personalizacion):
     svg_content = ET.ElementTree(ET.fromstring(
