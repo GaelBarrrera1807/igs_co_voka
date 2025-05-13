@@ -83,14 +83,26 @@
         {% for item in parte.detalle %}
             {% if item.tipo_de_campo %}
                 <div class="col text-end">{{ item }}: </div>
-                <div class="col text-start">{% get_value_for_personalizacion object item.pk %}</div>
+                <div class="col text-start">
+                    {% if item.tipo_de_campo.tipo_interno == "CAT_COLOR" %}
+                        {% get_value_for_personalizacion_color object item.pk %}
+                    {% else %}
+                        {% get_value_for_personalizacion object item.pk %}
+                    {% endif %}
+                </div>
             {% else %}
                 </div>
                 <h4>{{ item }}</h4>
                 <div class="row  row-cols-4">
                 {% for campo in item.campos.all %}
                     <div class="col text-end">{{ campo }}: </div>
-                    <div class="col text-start">{% get_value_for_personalizacion object campo.pk %}</div>
+                    <div class="col text-start">
+                        {% if campo.tipo_de_campo.tipo_interno == "CAT_COLOR" %}
+                            {% get_value_for_personalizacion_color object campo.pk %}
+                        {% else %}
+                            {% get_value_for_personalizacion object campo.pk %}
+                        {% endif %}
+                    </div>
                 {% endfor %}
                 </div>
                 <div class="row  row-cols-4">
@@ -106,5 +118,11 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    window.addEventListener('DOMContentLoaded', evt => {
+        window.print();
+    });
+</script>
 </body>
 </html>
