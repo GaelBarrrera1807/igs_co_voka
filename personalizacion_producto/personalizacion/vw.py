@@ -99,7 +99,10 @@ class CreateFromUser(TemplateView):
             campos_color = json.loads(request.POST.get('campos_color', '{}',))
             for campo_valor in personalizacion.detalle.all():
                 if campo_valor.campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
-                    campo_valor.valor = campos_color[f"campo-{campo_valor.campo.pk}"]
+                    try:
+                        campo_valor.valor = campos_color[f"campo-{campo_valor.campo.pk}"]
+                    except KeyError:
+                        campo_valor.valor = ""
                 else:
                     campo_valor.valor = request.POST.get(f"campo-{campo_valor.campo.pk}", '')
                 campo_valor.save()

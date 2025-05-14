@@ -16,6 +16,7 @@
                 <th>Estado Personalización</th>
                 <th>Creación</th>
                 <th>Actualización</th>
+                <th>Hoja Técnica</th>
             </tr>
             </thead>
             <tfoot>
@@ -30,6 +31,7 @@
                 <th>Estado Personalización</th>
                 <th>Creación</th>
                 <th>Actualización</th>
+                <th>Hoja Técnica</th>
             </tr>
             </tfoot>
             <tbody>
@@ -49,6 +51,11 @@
                     <td>{{ reg.estado }}</td>
                     <td>{{ reg.creacion }}</td>
                     <td>{{ reg.actualizacion }}</td>
+                    <td>
+                        <a href="{% url 'ver_personalizacion' reg.pk %}" class="btn btn-outline-secondary" target="_blank">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
