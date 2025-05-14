@@ -13,7 +13,13 @@ def display_product_table(context) -> dict:
     return {"products":
                 list(Producto.objects.filter(mostrar_en_galeria=True)),
             "MEDIA_URL": context.get('MEDIA_URL'),
-            "context": context,}
+            "context": context,
+            "categories":
+                list([
+                    categoria
+                    for categoria in CategoriaProducto.objects.all()
+                    if len(categoria.productos.all()) > 0]),
+            }
 
 
 @register.inclusion_tag("producto/display/categories.html")
