@@ -139,7 +139,7 @@ let check_show_productos = (pk) => {
             $(`#mnu-cat-opc-${pk} input[type="checkbox"]`).attr('checked', true);
         }
     }
-    let cards = $(`#productos-table div.producto`);
+    let cards = $(`[id^="productos-table-"] div.producto`);
     let txt_find = $(`#txt_find`).val().trim().toUpperCase();
     if(shown_categories.length === 0) {
         cards.removeClass('d-none')
@@ -160,6 +160,11 @@ let check_show_productos = (pk) => {
             ).forEach(card => $(card).removeClass('d-none'));
         }
     }
+    $(`#accordionCategorias .accordion-item`).each((idx,item) => {
+        $(item).removeClass('d-none');
+        if($(item).find(`div.producto`).length - $(item).find(`div.producto.d-none`).length == 0){
+            $(item).addClass('d-none');
+        }})
 }
 
 let personalizar_producto = (pk, nombre) => {
