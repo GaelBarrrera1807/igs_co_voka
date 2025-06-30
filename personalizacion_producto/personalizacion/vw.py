@@ -120,12 +120,12 @@ def ViewPDFPersonalizacion(request, pk):
     html = str(render_to_string("personalizacion_producto/create_from_user.html", {
         'object': object
     }) + "")
-    # response = HttpResponse(content_type="application/pdf")
-    # response["Content-Disposition"] = f'attachment; filename="Personalizacion {object.producto}.pdf"'
-    # HTML(string=html).write_pdf(response)
-    result = pisa.CreatePDF(html, dest=BytesIO())
-    if result.err:
-        return HttpResponse('Error generating PDF: %s' % result.err)
-    response = HttpResponse(content_type='application/pdf')
-    response.write(result.dest.getvalue())
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="Personalizacion {object.producto}.pdf"'
+    HTML(string=html).write_pdf(response)
+    # result = pisa.CreatePDF(html, dest=BytesIO())
+    # if result.err:
+    #     return HttpResponse('Error generating PDF: %s' % result.err)
+    # response = HttpResponse(content_type='application/pdf')
+    # response.write(result.dest.getvalue())
     return response
