@@ -12,7 +12,7 @@ from xhtml2pdf import pisa
 
 import json
 
-from igs_app_base.views import GenericViews, GenericCreate, GenericRead
+from igs_app_base.views import GenericViews, GenericCreate, GenericRead, GenericList
 from producto.models import Producto
 from catalogo.models import EstadoPersonalizacion
 
@@ -21,27 +21,35 @@ from .models import Personalizacion, PersonalizacionDetalle
 
 views = GenericViews(
     Personalizacion, "Personalización", "Personalizaciones",
-    "producto", MainForm, MainForm, MainForm)
+    "producto", MainForm, MainForm, MainForm
+)
 
 def create_empty_personalizacion(
         nombre: str, telefono: str, correo_electronico: str,
         notas_y_comentarios: str, producto: int, user: int
-        ) -> Personalizacion:
+    ) -> Personalizacion:
     producto = Producto.objects.get(pk=producto)
     user = User.objects.get(pk=user) if user > 0 else None
     estado = EstadoPersonalizacion.objects.get(estado_interno="STARTED")
     personalizacion = Personalizacion.objects.create(
-        nombre=nombre, telefono=telefono, correo_electronico=correo_electronico,
-        notas_y_comentarios=notas_y_comentarios, producto=producto, user=user,
-        estado=estado)
+        nombre=nombre,
+        telefono=telefono,
+        correo_electronico=correo_electronico,
+        notas_y_comentarios=notas_y_comentarios,
+        producto=producto,
+        user=user,
+        estado=estado
+    )
     for parte in personalizacion.producto.partes.all():
         for campo in parte.campos.all():
             PersonalizacionDetalle.objects.create(
-                personalizacion=personalizacion, campo=campo)
+                personalizacion=personalizacion, campo=campo
+            )
         for gpo in parte.gruposdecampos.all():
             for campo in gpo.campos.all():
                 PersonalizacionDetalle.objects.create(
-                    personalizacion=personalizacion, campo=campo)
+                    personalizacion=personalizacion, campo=campo
+                )
     return personalizacion
 
 class Create(GenericCreate):
@@ -55,9 +63,9 @@ class Create(GenericCreate):
         for parte in self.object.producto.partes.all():
             for campo in parte.campos.all():
                 PersonalizacionDetalle.objects.create(
-                    personalizacion=self.object, campo=campo)
+                    personalizacion=self.object, campo=campo
+                )
         return response
-
 
 class Read(GenericRead):
     model = Personalizacion
@@ -108,12 +116,30 @@ class CreateFromUser(TemplateView):
                 campo_valor.save()
         return HttpResponseRedirect(reverse('ver_personalizacion', kwargs={'pk': pk}))
 
-
 class ViewPersonalizacion(GenericRead):
     template_name = "personalizacion_producto/create_from_user.html"
     model = Personalizacion
     form_class = MainForm
 
+class List(GenericList):
+    model = Personalizacion
+    titulo = "Personalizaciones"
+    app = "producto"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['is_cliente'] = user.groups.filter(name='cliente').exists()
+        return context
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        if user.groups.filter(name='cliente').exists():
+            qs = qs.filter(user=user)
+        return qs
+
+views.List = List
 
 def ViewPDFPersonalizacion(request, pk):
     object = Personalizacion.objects.get(pk=pk)
