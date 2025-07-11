@@ -5,10 +5,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.views.generic import TemplateView, DetailView
-from django_weasyprint import WeasyTemplateResponseMixin
+from django.views.generic import TemplateView
 from weasyprint import HTML
-from xhtml2pdf import pisa
 
 import json
 
@@ -114,7 +112,7 @@ class CreateFromUser(TemplateView):
                 else:
                     campo_valor.valor = request.POST.get(f"campo-{campo_valor.campo.pk}", '')
                 campo_valor.save()
-        return HttpResponseRedirect(reverse('ver_personalizacion', kwargs={'pk': pk}))
+        return HttpResponseRedirect(reverse('pdf_personalizacion', kwargs={'pk': pk}))
 
 class ViewPersonalizacion(GenericRead):
     template_name = "personalizacion_producto/create_from_user.html"
@@ -149,9 +147,4 @@ def ViewPDFPersonalizacion(request, pk):
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = f'attachment; filename="Personalizacion {object.producto}.pdf"'
     HTML(string=html).write_pdf(response)
-    # result = pisa.CreatePDF(html, dest=BytesIO())
-    # if result.err:
-    #     return HttpResponse('Error generating PDF: %s' % result.err)
-    # response = HttpResponse(content_type='application/pdf')
-    # response.write(result.dest.getvalue())
     return response
