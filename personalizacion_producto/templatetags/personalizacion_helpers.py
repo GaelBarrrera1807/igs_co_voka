@@ -36,3 +36,7 @@ def procesa_svg(personalizacion):
     final_content = ET.tostring(svg_content, encoding="unicode")
     final_content = re.sub(r':?ns\d+:?', "", final_content)
     return SafeString(final_content)
+
+@register.simple_tag
+def get_svg_styles(personalizacion):
+    return SafeString(personalizacion.get_styles())

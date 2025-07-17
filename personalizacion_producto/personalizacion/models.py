@@ -31,6 +31,20 @@ class Personalizacion(models.Model):
                 return detail
         return None
 
+    def get_styles(self, pre_selector="#producto-svg "):
+        css_rules = list()
+        for pt in self.producto.partes.all():
+            for campo in pt.campos.all():
+                if campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
+                    selector = f"{pre_selector} #{campo.id_svg}".strip()
+                    css_rules.append(f"{selector}{{fill: {self.get_detail_by_field_pk(campo.pk)};}}")
+            for gpo in pt.gruposdecampos.all():
+                for campo in gpo.campos.all():
+                    if campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
+                        selector = f"{pre_selector} #{campo.id_svg}".strip()
+                        css_rules.append(f"{selector}{{fill: {self.get_detail_by_field_pk(campo.pk).valor.split('||')[0]};}}")
+        return "\n".join(css_rules)
+
 class PersonalizacionDetalle(models.Model):
     personalizacion = models.ForeignKey(Personalizacion, models.CASCADE, "detalle")
     campo = models.ForeignKey(CampoParteProducto, models.PROTECT, related_name="personalizaciones")
