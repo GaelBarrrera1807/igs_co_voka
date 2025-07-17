@@ -1,0 +1,11 @@
+Django==5.1.2
+crispy-bootstrap5==2024.10
+django-crispy-forms==2.3
+django-extensions==3.2.3
+django-weasyprint==2.4.0
+PyMySQL==1.1.1
+PyYAML==6.0.2
+uritools==5.0.0
+urllib3==2.4.0
+weasyprint==65.1
+xhtml2pdf==0.2.17
