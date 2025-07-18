@@ -37,6 +37,14 @@ def procesa_svg(personalizacion):
             print(f"{elemento =}")
             print(f"{elemento.get('fill') =}")
             print(f"{valores_color =}")
+            style_att = elemento.get("style")
+            if style_att:
+                style_rules = style_att.split(";")
+                for idx,style_rule in enumerate(style_rules):
+                    if "fill:" in style_rule:
+                        style_rules[idx] = f"fill: {valores_color[0]}"
+                elemento.set("style", ";".join(style_rules))
+                print(f"{style_rules =}")
     final_content = ET.tostring(svg_content, encoding="unicode")
     final_content = re.sub(r':?ns\d+:?', "", final_content)
     return SafeString(final_content)

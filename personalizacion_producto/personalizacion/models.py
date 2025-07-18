@@ -37,7 +37,7 @@ class Personalizacion(models.Model):
             for campo in pt.campos.all():
                 if campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
                     selector = f"{pre_selector} #{campo.id_svg}".strip()
-                    css_rules.append(f"{selector}{{fill: {self.get_detail_by_field_pk(campo.pk)};}}")
+                    css_rules.append(f"{selector}{{fill: {self.get_detail_by_field_pk(campo.pk).valor.split('||')[0]};}}")
             for gpo in pt.gruposdecampos.all():
                 for campo in gpo.campos.all():
                     if campo.tipo_de_campo.tipo_interno == "CAT_COLOR":
