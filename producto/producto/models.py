@@ -13,6 +13,18 @@ class Producto(models.Model):
         upload_to='producto/',
         help_text="Archivo *.sgv con los elementos en 'id' "
                   "correspondientes a la imagen del producto a personalizar")
+    svg_textura_1 = models.FileField(
+        upload_to='producto/',
+        null=True,
+        help_text="Archivo *.jpg, *.png, etc., correspondiente a texturas de svg")
+    svg_textura_2 = models.FileField(
+        upload_to='producto/',
+        null=True,
+        help_text="Archivo *.jpg, *.png, etc., correspondiente a texturas de svg")
+    svg_textura_3 = models.FileField(
+        upload_to='producto/',
+        null=True,
+        help_text="Archivo *.jpg, *.png, etc., correspondiente a texturas de svg")
     fotografia = models.FileField(
         upload_to='producto/',
         help_text="Archivo *.jpg, *.png, etc., "
