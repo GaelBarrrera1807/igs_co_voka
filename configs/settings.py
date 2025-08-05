@@ -141,3 +141,5 @@ MEDIA_URL = '/uploads/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'session_login'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

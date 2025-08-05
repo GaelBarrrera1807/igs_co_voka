@@ -1,7 +1,11 @@
+import os
+import xml.etree.ElementTree as ET
+import re, cairosvg, base64
+
+from os import path
 from django import template
 from django.utils.safestring import SafeString
-import xml.etree.ElementTree as ET
-import re
+from django.conf import settings
 
 register = template.Library()
 
@@ -46,6 +50,19 @@ def procesa_svg(personalizacion):
                 elemento.set("style", ";".join(style_rules))
                 print(f"{style_rules =}")
     final_content = ET.tostring(svg_content, encoding="unicode")
+
+    imgpath = path.join(settings.MEDIA_ROOT, 'tmp', path.dirname(str(personalizacion.producto.imagen)))
+    tmp_svg = path.join(imgpath, path.basename(str(personalizacion.producto.imagen)))
+    tmp_png = tmp_svg + ".png"
+    if not path.exists(imgpath):
+        os.makedirs(imgpath)
+    with open(tmp_svg, "w") as f:
+        f.write(final_content)
+    cairosvg.svg2png(url=tmp_svg, write_to=tmp_png)
+    with open(tmp_png, "rb") as f:
+        tmp_png_content = base64.b64encode(f.read()).decode("utf-8")
+    return SafeString(f"""<img src="data:image/png;base64, {tmp_png_content}" style="width: 100%" />""")
+    
     final_content = re.sub(r':?ns\d+:?', "", final_content)
     return SafeString(final_content)
 

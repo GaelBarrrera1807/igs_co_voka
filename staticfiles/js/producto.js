@@ -167,9 +167,16 @@ let check_show_productos = (pk) => {
         }})
 }
 
-let personalizar_producto = (pk, nombre) => {
-    openPanel($(`#producto-personalizacion-${pk}-template`).html(), `Personalizar ${nombre}`);
-    $(`.modal-dialog.modal-dialog-centered.modal-lg`).addClass('modal-dialog-scrollable')
+let personalizar_producto = (pk, nombre, svg_url) => {
+    openPanel("Cargando Modelo para personalizar", "Cargando...", false, null, 'modal_message_loading');
+    $.get(svg_url, (svg_xml) => {
+        closePanel('modal_message_loading');
+        openPanel($(`#producto-personalizacion-${pk}-template`).html(), `Personalizar ${nombre}`);
+        $(`.modal-dialog.modal-dialog-centered.modal-lg`).addClass('modal-dialog-scrollable');
+    }).fail(() => {
+        closePanel('modal_message_loading');
+        alert("Error al cargar Modelo");
+    });
 }
 
 let paletas_user = {'paletas': 'colores'};
@@ -212,13 +219,15 @@ let update_picture_color = (check, pkparte, id_svg) => {
     check.value = color_checked[0].value;
     let div_color_campo = $(`label[for="${check.id}"] div.muestra-color`)[0];
     div_color_campo.style.backgroundColor = color_text;
-    let svg_item = $(`#producto-svg svg #${id_svg}`)[0];
-        svg_item.style.fill=color_text;
+        let svg_object = $(`#producto-svg object`)[0].contentDocument;
+    let svg_item = svg_object.getElementById(id_svg);
+    svg_item.style.fill=color_text;
 }
 
 let update_picture_color_2 = (input, id_svg) => {
     if(id_svg) {
-        let svg_item = $(`#producto-svg svg #${id_svg}`)[0];
+        let svg_object = $(`#producto-svg object`)[0].contentDocument;
+        let svg_item = svg_object.getElementById(id_svg);
         svg_item.style.fill = input.value;
     }
 }
