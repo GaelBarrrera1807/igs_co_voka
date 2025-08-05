@@ -137,7 +137,7 @@
     </div>
     <div class="row">
     <div id="producto-svg" class="col">
-        {{ producto.svg_content|safe }}
+        <object data="{{ MEDIA_URL }}{{ producto.imagen }}"></object>
     </div>
     </div>
     <div class="row">
