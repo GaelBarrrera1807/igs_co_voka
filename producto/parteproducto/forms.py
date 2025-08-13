@@ -2,7 +2,8 @@ from django import forms
 
 from igs_app_base.hiperforms import BaseHiperModelForm
 
-from .models import CampoParteProducto, GrupoCampos
+from .models import CampoParteProducto
+from .models import GrupoCampos
 from .models import ParteProducto
 
 

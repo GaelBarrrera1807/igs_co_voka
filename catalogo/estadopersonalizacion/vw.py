@@ -1,4 +1,5 @@
-from igs_app_base.views import GenericViews, GenericCreate
+from igs_app_base.views import GenericCreate
+from igs_app_base.views import GenericViews
 
 from .forms import MainForm
 from .models import EstadoPersonalizacion

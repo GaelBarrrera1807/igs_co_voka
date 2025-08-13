@@ -1,6 +1,9 @@
 from django.urls import path
 
-from .vw import views, CreateFromUser, ViewPDFPersonalizacion, ViewPersonalizacion
+from .vw import CreateFromUser
+from .vw import ViewPDFPersonalizacion
+from .vw import ViewPersonalizacion
+from .vw import views
 
 obj = 'personalizacion'
 app_label = 'personalizacion_producto'

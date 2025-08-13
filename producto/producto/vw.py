@@ -7,9 +7,11 @@ from igs_app_base.views import GenericList
 from igs_app_base.views import GenericRead
 from igs_app_base.views import GenericUpdate
 
-from producto.models import CampoParteProducto, GrupoCampos
+from producto.models import CampoParteProducto
+from producto.models import GrupoCampos
 from producto.models import ParteProducto
-from producto.parteproducto.forms import MainFormCampo, MainFormGrupo
+from producto.parteproducto.forms import MainFormCampo
+from producto.parteproducto.forms import MainFormGrupo
 from producto.parteproducto.forms import MainFormParte
 
 from .forms import MainForm

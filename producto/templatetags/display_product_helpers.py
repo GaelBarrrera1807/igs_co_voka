@@ -3,8 +3,9 @@ from typing import Iterable
 from django import template
 
 from catalogo.models import CategoriaProducto
+from producto.models import CampoParteProducto
+from producto.models import ParteProducto
 from producto.models import Producto
-from producto.models import CampoParteProducto, ParteProducto
 
 register = template.Library()
 
