@@ -1,7 +1,7 @@
-from catalogo.models import TipoParte
 from catalogo.models import TipoCampo
-from igs_app_base.models import MenuOpc
+from catalogo.models import TipoParte
 from igs_app_base.models import App
+from igs_app_base.models import MenuOpc
 from igs_app_base.utils.utils import add_or_create_menuopc
 
 

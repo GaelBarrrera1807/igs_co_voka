@@ -1,13 +1,13 @@
 <!-- producto/producto/display/campo_personalizacion_user.html start -->
 {% if campo.tipo_de_campo.tipo_interno == 'CAT_COLOR' %}
-    <input type="checkbox" class="btn-check" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" value="" autocomplete="off" onchange="update_picture_color(this, {{ parte.pk }}, '{{ campo.id_svg }}')"  />
+    <input type="checkbox" class="btn-check" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" value="" autocomplete="off" onchange="update_picture_color(this, {{ parte.pk }}, '{{ campo.id_svg }}'); actualiza_personalizacion();"  />
     <label class="border-0 btn btn-outline-secondary text-start" for="campo-{{ campo.pk }}" title="{{ campo.nombre }}">
         <div class="d-inline-block muestra-color rounded" style="background-color: silver;"></div>
     </label>
 {% elif campo.tipo_de_campo.tipo_interno == 'OPCIONES_PRODUCTOS' %}
     <p>{{ campo }}</p>
     {% for opc in campo.opciones_material.opciones.all %}
-    <input type="radio" class="btn-check selectable-value" id="campo-{{ campo.pk }}-{{ opc.pk }}" name="campo-{{ campo.pk }}" value="{{ opc.material }}" autocomplete="off" onchange="update_selectable_values_label()" />
+    <input type="radio" class="btn-check selectable-value" id="campo-{{ campo.pk }}-{{ opc.pk }}" name="campo-{{ campo.pk }}" value="{{ opc.material }}" autocomplete="off" onchange="update_selectable_values_label(); actualiza_personalizacion();" />
     <label class="border-0 btn btn-outline-secondary text-start" for="campo-{{ campo.pk }}-{{ opc.pk }}" title="{{ opc.material }}">
         {% if opc.imagen %}
             <img src="{{ MEDIA_URL }}{{ opc.imagen }}" class="d-block muestra-color rounded" alt="value="{{ opc.material }}" />
@@ -17,9 +17,9 @@
     {% endfor %}
 {% elif campo.tipo_de_campo.tipo_interno == 'ABIERTO' %}
     <label for="campo-{{ campo.pk }}" class="form-label">{{ campo }}</label>
-    <textarea class="form-control" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" rows="3"></textarea>
+    <textarea class="form-control" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" rows="3" onchange="actualiza_personalizacion();"></textarea>
 {% elif campo.tipo_de_campo.tipo_interno == 'COLOR' %}
     <label for="campo-{{ campo.pk }}" class="form-label">{{ campo }}</label>
-    <input type="color" class="form-control" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" onchange="update_picture_color_2(this, '{{ campo.id_svg }}')"/>
+    <input type="color" class="form-control" id="campo-{{ campo.pk }}" name="campo-{{ campo.pk }}" onchange="update_picture_color_2(this, '{{ campo.id_svg }}'); actualiza_personalizacion();"/>
 {% endif %}
 <!-- producto/producto/display/campo_personalizacion_user.html end -->

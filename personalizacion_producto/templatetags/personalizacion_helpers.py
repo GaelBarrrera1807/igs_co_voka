@@ -1,11 +1,11 @@
 import os
-import xml.etree.ElementTree as ET
 import re, cairosvg, base64
+import xml.etree.ElementTree as ET
 
-from os import path
 from django import template
-from django.utils.safestring import SafeString
 from django.conf import settings
+from django.utils.safestring import SafeString
+from os import path
 
 register = template.Library()
 

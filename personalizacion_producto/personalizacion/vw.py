@@ -2,7 +2,8 @@ from http.client import HTTPResponse
 from io import BytesIO
 
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import TemplateView
@@ -10,12 +11,16 @@ from weasyprint import HTML
 
 import json
 
-from igs_app_base.views import GenericViews, GenericCreate, GenericRead, GenericList
-from producto.models import Producto
 from catalogo.models import EstadoPersonalizacion
+from igs_app_base.views import GenericCreate
+from igs_app_base.views import GenericList
+from igs_app_base.views import GenericRead
+from igs_app_base.views import GenericViews
+from producto.models import Producto
 
 from .forms import MainForm
-from .models import Personalizacion, PersonalizacionDetalle
+from .models import Personalizacion
+from .models import PersonalizacionDetalle
 
 views = GenericViews(
     Personalizacion, "Personalización", "Personalizaciones",

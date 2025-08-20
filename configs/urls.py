@@ -20,7 +20,8 @@ from django.contrib import admin
 from django.urls import include
 from django.urls import path
 
-from producto.views import DisclaimerProds, DisplayOpenProds
+from producto.views import DisclaimerProds
+from producto.views import DisplayOpenProds
 
 urlpatterns = ([
     path('admin/', admin.site.urls),

@@ -173,6 +173,17 @@ let personalizar_producto = (pk, nombre, svg_url) => {
         closePanel('modal_message_loading');
         openPanel($(`#producto-personalizacion-${pk}-template`).html(), `Personalizar ${nombre}`);
         $(`.modal-dialog.modal-dialog-centered.modal-lg`).addClass('modal-dialog-scrollable');
+        let prod="Hola Mundo";
+        (async function (){
+            await colEvokaPers.findById(pk).then(objeto => {
+            if(typeof objeto === "undefined") {
+                colEvokaPers.insert(crea_registro(pk));
+            }
+            }).catch(() => {
+                colEvokaPers.insert(crea_registro(pk));
+            });
+            await colEvokaPers.findById(pk).then(recupera_personalizacion);
+        })();
     }).fail(() => {
         closePanel('modal_message_loading');
         alert("Error al cargar Modelo");
@@ -237,6 +248,7 @@ let update_selectable_values_label = () => $(`#label-producto-personalizado`).ht
         input => input.checked).map(input => input.value).join(","));
 
 let update_color_fields = () => {
+    let pk = parseInt($("#producto-personalizacion-form #producto_pk").val());
     let campos_color = Object();
     Array.from($(`form#producto-personalizacion-form input[type="checkbox"][name^="campo-"]`)).forEach(
         input => campos_color[input.name] = input.value);
@@ -247,9 +259,91 @@ let update_color_fields = () => {
             openPanel(
                 'En un momento comenzará la descarga del formato para el producto personalizado',
                 'Descargando...');
+            colEvokaPers.delete(pk);
         }, 1 *1000);
     }, 1 * 1000);
     return true;
+}
+
+let dbEvoka = new DBIndex("evoka");
+dbEvoka.add_collection("personalizacion", "id", false);
+dbEvoka.open();
+let colEvokaPers = dbEvoka.collections["personalizacion"];
+let objeto_personalizacion_pendiente = false;
+
+let crea_registro = (pk, completado=false) => {
+    const form = $('#producto-personalizacion-form')[0];
+    if (!form) return;
+    const campos = {};
+    const colores = {};
+
+    form.querySelectorAll('input[type="checkbox"][id^="btn-check-color-"]').forEach((el) => {
+        if (el.id) colores[el.id] = el.checked;
+    });
+    form.querySelectorAll('input[type="radio"][name^="campo-"]').forEach((el) => {
+        if (el.id) campos[el.id] = el.checked;
+    });
+    form.querySelectorAll('input[type="checkbox"][name^="campo-"]').forEach((el) => {
+        if (el.id) campos[el.id] = el.value;
+    });
+    form.querySelectorAll('input[type="color"][name^="campo-"]').forEach((el) => {
+        if (el.id) campos[el.id] = el.value;
+    });
+    form.querySelectorAll('textarea[name^="campo-"]').forEach((el) => {
+        if (el.id) campos[el.id] = el.value;
+    });
+
+    return {
+        id: parseInt(pk),
+        campos,
+        colores,
+        timestamp: Date.now(),
+        completado
+    };
+}
+
+let recupera_personalizacion = registro => {
+    Object.entries(registro.campos).forEach(([id, valor]) => {
+        let objeto = $(`#${id}`);
+        if(!valor) {
+            return;
+        }
+        if(objeto[0].nodeName.toLowerCase().trim() === "textarea") {
+            $(objeto).val(valor);
+        } else if(objeto[0].nodeName.toLowerCase().trim() === "input") {
+            if(objeto.attr('type').toLowerCase().trim() === "radio") {
+                $(objeto).attr('checked', true);
+            } else if(objeto.attr('type').toLowerCase().trim() === "color") {
+                $(objeto).val(valor);
+            } else if(objeto.attr('type').toLowerCase().trim() === "checkbox") {
+                $(objeto).val(valor);
+            }
+        }
+    });
+    Object.entries(registro.colores).filter(
+        ([btnid, activated]) => activated).forEach(
+            ([btnid, activated]) => $(`#${btnid}`).trigger("click"));
+    objeto_personalizacion_pendiente = Object.entries(registro.campos);
+}
+
+let check_personalizacion_pendiente = () => {
+    if(objeto_personalizacion_pendiente) {
+        objeto_personalizacion_pendiente.forEach(([id, valor]) => {
+            let objeto = $(`#${id}`);
+            if(!valor) {
+                return;
+            }if(objeto[0].nodeName.toLowerCase().trim() === "input" && objeto.attr('type').toLowerCase().trim() === "checkbox" && valor.split("||").length===3) {
+                $(`input[type="radio"][value="${valor}"]`).attr('checked', true);
+            }
+            objeto.trigger('change');
+        });
+        objeto_personalizacion_pendiente = false;
+    }
+}
+
+let actualiza_personalizacion = () => {
+    let pk = parseInt($("#producto-personalizacion-form #producto_pk").val());
+    colEvokaPers.update(pk, crea_registro(pk));
 }
 
 window.addEventListener('DOMContentLoaded', evt => {

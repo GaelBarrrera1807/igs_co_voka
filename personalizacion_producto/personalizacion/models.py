@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from catalogo.models import EstadoPersonalizacion
-from producto.models import Producto
 from producto.models import CampoParteProducto
+from producto.models import Producto
 
 
 class Personalizacion(models.Model):
