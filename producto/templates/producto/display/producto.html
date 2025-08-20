@@ -14,7 +14,7 @@
             </div>
             {% endif %}
             <div class="text-center">
-                <button onclick="personalizar_producto({{ producto.pk }}, '{{ producto }}', '{{ MEDIA_URL }}{{ producto.imagen }}')" href="#" type="button" class="btn btn-warning rounded-pill p-3">
+                <button id="prod-{{ producto.pk }}" onclick="personalizar_producto({{ producto.pk }}, '{{ producto }}', '{{ MEDIA_URL }}{{ producto.imagen }}')" href="#" type="button" class="btn btn-warning rounded-pill p-3">
                     ¡Personalízame!
                 </button>
             </div>
